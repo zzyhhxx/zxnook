@@ -68,7 +68,7 @@
 		height: 20rpx;
 	}
 	.usable {
-		background-color: #F68685;
+		background-color: var(--color-tint);
 	}
 	.unusable {
 		background-color: gray;
