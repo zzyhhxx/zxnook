@@ -39,7 +39,10 @@
 			},
 			onPageScroll(e) {
 				let tabControlTop = this.$refs.tabcontrol.$el.offsetTop;
-				this.showFixTabControl = e.scrollTop > tabControlTop;
+				let showFixTabControl = e.scrollTop > tabControlTop;
+				if(this.showFixTabControl !== showFixTabControl) {
+					this.showFixTabControl = showFixTabControl;
+				}
 			}
 		}
 	}
