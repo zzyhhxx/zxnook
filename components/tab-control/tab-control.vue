@@ -1,5 +1,5 @@
 <template>
-	<scroll-view class="tab-control" scroll-x="true" show-scrollbar="false">
+	<scroll-view class="tab-control" :scroll-x="true" :show-scrollbar="false">
 		<view class="tab-content">
 			<view 
 				class="tab-item"
@@ -22,10 +22,7 @@
 					return [
 						{text: '推荐'},
 						{text: '关注'},
-						{text: '动态'},
 						{text: '问答'},
-						{text: '话题'},
-						{text: '附近'},
 						{text: '宠物课堂'},
 					]
 				}
@@ -64,9 +61,6 @@
 	 width: 100rpx;
 	 white-space: nowrap;
 	 line-height: 98rpx;
- }
- ::-webkit-scrollbar { 
-	 width: 0 !important 
  }
  .active {
 	 color: var(--color-high-text);

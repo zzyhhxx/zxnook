@@ -1,7 +1,7 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-			"path": "pages/index/index",
+			"path": "pages/home/home",
 			"style": {
 				"navigationBarTitleText": "我是小程序你是猪"
 			}
@@ -42,6 +42,33 @@
             }
             
         }
+        ,{
+            "path" : "pages/petdetail/petdetail",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/articledetail/articledetail",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/addpet/addpet",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
@@ -60,7 +87,7 @@
 	        "spacing": "3px",
 	        "list": [
 				{
-	            "pagePath": "pages/index/index",
+	            "pagePath": "pages/home/home",
 	            "iconPath": "static/address.png",
 	            "selectedIconPath": "static/address.png",
 	            "text": "首页"

@@ -1,35 +1,70 @@
 <template>
 	<view class="card">
-		<view class="left">
-			<image src="../../static/image/dog3.png" mode="" class="image"></image>
-		</view>
-		<view class="right">
-			<view class="pet-name">heiheihei</view>
-			<view class="pet-info">
-				<view class="icon">
-					<image src="../../static/pet.png" mode="" class="image"></image>
-				</view>
-				<view class="info-name">性别：</view>
-				<view class="info-desc">gg</view>
+		<template v-if="hasPet">
+			<view class="left">
+				<image src="../../static/image/dog3.png" mode="" class="image"></image>
 			</view>
-			<view class="pet-info">
-				<view class="icon">
-					<image src="../../static/pet.png" mode="" class="image"></image>
+			<view class="right">
+				<view class="pet-name">heiheihei</view>
+				<view class="pet-info">
+					<view class="icon">
+						<image src="../../static/pet.png" mode="" class="image"></image>
+					</view>
+					<view class="info-name">性别：</view>
+					<view class="info-desc">gg</view>
 				</view>
-				<view class="info-name">年龄：</view>
-				<view class="info-desc">12</view>
+				<view class="pet-info">
+					<view class="icon">
+						<image src="../../static/pet.png" mode="" class="image"></image>
+					</view>
+					<view class="info-name">年龄：</view>
+					<view class="info-desc">12</view>
+				</view>
 			</view>
-		</view>
+		</template>
+		<template v-else>
+			<xn-button
+				class="btn"
+				text="添加宠物"
+				@btnClick="onClick"
+			></xn-button>
+		</template>
+		
 	</view>
 </template>
 
 <script>
 	export default {
 		name:"card-pet",
+		props: {
+			hasPet: {
+				type: Boolean,
+				default: false
+			},
+			petInfo: {
+				type: Object,
+				default() {
+					return {};
+				}
+			}
+		},
 		data() {
 			return {
 				
 			};
+		},
+		methods:{
+			onClick() {
+				console.log(111111)
+				uni.navigateTo({
+					url: '/pages/addpet/addpet',
+					fail: () => {
+						uni.redirectTo({
+							url: '/pages/addpet/addpet'
+						});
+					},
+				});
+			}
 		}
 	}
 </script>
@@ -42,6 +77,13 @@
 		border-radius: 36rpx;
 		display: flex;
 		margin-top: 20rpx;
+		position: relative;
+	}
+	.btn {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
 	}
 	.left {
 		width: 172rpx;
@@ -92,5 +134,8 @@
 	}
 	.pet-name {
 		font-size: 44rpx;
+	}
+	.add-btn {
+		
 	}
 </style>

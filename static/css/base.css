@@ -36,7 +36,7 @@ a {
 
 /*清除浮动*/
 
-.cleaer-fix::after {
+.clear-fix::after {
     clear: both;
     content: '';
     display: block;
@@ -45,10 +45,32 @@ a {
     visibility: hidden;
 }
 
-.cleaer-fix {
+.clear-fix {
     zoom: 1;
 }
-
+ ::-webkit-scrollbar {
+	 display: none;
+	 width: 0 !important;
+	 height: 0 !important;
+	 -webkit-appearance: none;
+	 background: transparent;
+	 color: transparent;
+ }
+ uni-scroll-view .uni-scroll-view::-webkit-scrollbar {
+	 display: none;
+	 width: 0 !important;
+	 height: 0 !important;
+	 -webkit-appearance: none;
+	 background: transparent;
+	 color: transparent;
+ }
+ .content {
+ 	display: flex;
+ 	flex-direction: column;
+ 	align-items: center;
+ 	justify-content: center;
+ 	background-color: #ffffff;
+ }
 .left {
     float: left;
 }

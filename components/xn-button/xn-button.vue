@@ -3,6 +3,7 @@
 		<view
 			class="btn"
 			:class="{large: isLarge, normal: isNormal, small: isSmall, usable: isUsable, unusable: isUnusable}"
+			@click="onClick()"
 		>
 			{{text}}
 		</view>
@@ -19,11 +20,11 @@
 			},
 			size: {
 				type: String,
-				default: ''
+				default: 'normal'
 			},
 			type: {
 				type: String,
-				default: ''
+				default: 'usable'
 			}
 		},
 		computed: {
@@ -42,6 +43,11 @@
 			isUnusable() {
 				return this.type === 'unusable';
 			}
+		},
+		methods:{
+			onClick() {
+				this.$emit('btnClick')
+			}
 		}
 	}
 </script>
@@ -52,6 +58,7 @@
 		border-radius: 10rpx;
 		font-size: 36rpx;
 		text-align: center;
+		transition: all .2s ease-in-out;
 	}
 	.large {
 		width: 604rpx;
@@ -71,6 +78,6 @@
 		background-color: var(--color-tint);
 	}
 	.unusable {
-		background-color: gray;
+		background-color: #C7CAD5;
 	}
 </style>
