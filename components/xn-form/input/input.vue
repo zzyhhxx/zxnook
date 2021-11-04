@@ -62,5 +62,10 @@
 		border-top: none;
 		border-left: none;
 		border-right: none;
+		outline:none;
+		box-shadow: none;
+	}
+	.input:focus {
+		border: none;
 	}
 </style>

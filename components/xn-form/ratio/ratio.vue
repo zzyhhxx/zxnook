@@ -2,18 +2,20 @@
 	<view class="ratio">
 		<view class="label">{{label}}</view>
 		<view class="ratio-item">
-			<view class="item">
-				<view>
-					<radio value="1" :checked="true" name="sex" />
+			<template v-if="list.length">
+				<view
+					class="item"
+					v-for="(item, index) in list"
+					:key="index"
+					@click="btnClick(index)"
+				>
+					<view>
+						<radio :value="item.value" :checked="index === currentIndex" />
+					</view>
+					<view>{{item.name}}</view>
 				</view>
-				<view>gg</view>
-			</view>
-			<view class="item">
-				<view>
-					<radio value="2" name="sex"/>
-				</view>
-				<view>mm</view>
-			</view>
+			</template>
+			
 		</view>
 	</view>
 
@@ -26,6 +28,21 @@
 			label: {
 				type: String,
 				default: ''
+			},
+			list: {
+				type: Array,
+				default() {
+					return []
+				}
+			},
+			currentIndex: {
+				type: Number,
+				default: 0
+			}
+		},
+		methods: {
+			btnClick(index) {
+				this.$emit('btnClick', index);
 			}
 		}
 	}

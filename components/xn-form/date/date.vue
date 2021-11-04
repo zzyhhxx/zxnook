@@ -41,8 +41,8 @@
        },
        methods: {
            bindDateChange: function(e) {
-			   console.log(33333333333, e.target.value)
-               this.date = e.target.value
+               this.date = e.target.value;
+			   this.$emit('change', this.date);
            },
            getDate(type) {
                const date = new Date();

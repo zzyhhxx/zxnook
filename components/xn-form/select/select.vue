@@ -6,8 +6,8 @@
 		<view class="uni-list">
 			<view class="uni-list-cell">
 				<view class="uni-list-cell-db">
-					<picker @change="bindPickerChange" :value="index" :range="array">
-						<view class="uni-input">{{array[index]}}</view>
+					<picker @change="bindPickerChange" :value="currentIndex" :range="list">
+						<view class="uni-input">{{list[currentIndex]}}</view>
 					</picker>
 				</view>
 			</view>
@@ -18,22 +18,30 @@
    export default {
 	   name: 'Select',
 	   props: {
-		 label: {
-			 type: String,
-			 default: ''
-		 }  
+		   label: {
+			   type: String,
+			   default: ''
+		   },
+		   list: {
+			   type: Array,
+			   default() {
+				   return []
+			   }
+		   },
+		   currentIndex: {
+			   type: Number,
+			   default: 0
+		   }
+			
 	   },
        data() {
            return {
-               array: ['阿拉斯加', '中华田园犬', '萨摩耶', '金毛'],
-			   index: 0
            }
        },
        methods: {
             bindPickerChange: function(e) {
-			   console.log('picker发送选择改变，携带值为', e.target.value)
-			   this.index = e.target.value
-		    },
+				this.$emit('select', e.target.value);
+		    }
        }
    }
 </script>
