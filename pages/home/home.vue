@@ -24,7 +24,7 @@
 </template>
 
 <script>
-	import { getPetInfo, getTabList, getContentList } from '../../network/home.js';
+	import { getPetInfo, getTabList, getContentList } from '../../network/Home.js';
 	export default {
 		data() {
 			return {

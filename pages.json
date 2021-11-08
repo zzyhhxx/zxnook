@@ -3,14 +3,14 @@
 		{
 			"path": "pages/home/home",
 			"style": {
-				"navigationBarTitleText": "我是小程序你是猪"
+				"navigationBarTitleText": "猫狗日记"
 			}
 		}
 	    ,{
             "path" : "pages/trade/trade",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "这是我的弟弟乔治",
+                "navigationBarTitleText": "猫狗日记",
                 "enablePullDownRefresh": false
             }
             
@@ -28,7 +28,7 @@
             "path" : "pages/mall/mall",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "我们一起玩泥巴",
+                "navigationBarTitleText": "猫狗商城",
                 "enablePullDownRefresh": false
             }
             
@@ -37,7 +37,7 @@
             "path" : "pages/profile/profile",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "轰隆隆隆隆隆",
+                "navigationBarTitleText": "个人中心",
                 "enablePullDownRefresh": false
             }
             
@@ -46,7 +46,7 @@
             "path" : "pages/petdetail/petdetail",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "",
+                "navigationBarTitleText": "宠物详情",
                 "enablePullDownRefresh": false
             }
             
@@ -64,7 +64,43 @@
             "path" : "pages/addpet/addpet",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "",
+                "navigationBarTitleText": "添加宠物",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/login/login",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "欢迎登录",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/register/register",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "注册",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/resetpsw/resetpsw",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "重置密码",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/forgotpsw/forgotpsw",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "忘记密码",
                 "enablePullDownRefresh": false
             }
             
