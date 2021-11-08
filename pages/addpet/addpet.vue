@@ -57,11 +57,11 @@
 </template>
 
 <script>
-	import XnUpload from '../../components/xn-form/upload/upload.vue';
-	import XnInput from '../../components/xn-form/input/input.vue';
-	import XnRatio from '../../components/xn-form/ratio/ratio.vue';
-	import XnDate from '../../components/xn-form/date/date.vue';
-	import XnSelect from '../../components/xn-form/select/select.vue';
+	import xnUpload from '../../components/xn-form/upload/upload.vue';
+	import xnInput from '../../components/xn-form/input/input.vue';
+	import xnRatio from '../../components/xn-form/ratio/ratio.vue';
+	import xnDate from '../../components/xn-form/date/date.vue';
+	import xnSelect from '../../components/xn-form/select/select.vue';
 	export default {
 		data() {
 			return {
@@ -69,7 +69,7 @@
 				radioIndex: 0,
 				genderRatio: [{value: '1', name: 'GG'}, {value: '2', name: 'MM'},],
 				typeIndex: 0,
-				typeList: ['猫猫', '狗狗', '其他'],
+				typeList: ['猫猫', '狗狗', '兔兔', '鸟鸟'],
 				breedIndex: 0,
 				breedList: ['中华田园犬', '萨摩耶', '金毛', '阿拉斯加', '牧羊犬'],
 				sterilisationIndex: 0,
@@ -86,11 +86,11 @@
 			}
 		},
 		components: {
-			XnUpload,
-			XnInput,
-			XnRatio,
-			XnDate,
-			XnSelect
+			xnUpload,
+			xnInput,
+			xnRatio,
+			xnDate,
+			xnSelect
 		},
 		methods: {
 			onPetNameChange(name) {
@@ -122,7 +122,6 @@
 				if(!this.petName) {
 					uni.showToast({
 					    title: '宠物名不能为空哦～',
-						icon: 'none',
 					    duration: 1500
 					});
 				}
