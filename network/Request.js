@@ -3,7 +3,7 @@ import { CONFIG } from './Config.js';
 export function request({url = '', data = {}}) {
 	return new Promise( (resolve, reject) => {
 		uni.request({
-		    url: `${CONFIG.DEMAIN}url`,
+		    url: `${CONFIG.DEMAIN}${url}`,
 		    data: {
 				...data,
 				token: getCache('token')

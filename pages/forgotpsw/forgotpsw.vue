@@ -1,6 +1,12 @@
 <template>
 	<view class="content">
-		<xn-input class="item" label="邮箱" type="email"></xn-input>
+		<xn-input 
+			class="item" 
+			label="邮箱" 
+			type="email"
+			@change="onEmailChange"
+			@inputBlur="onEmailBlur"
+			></xn-input>
 		<xn-button class="item" text="发送" size="large"></xn-button>
 		<view class="register tips">
 			<text>我们会向您的邮箱发送修改密码的链接</text>
@@ -16,8 +22,9 @@
 
 <script>
 	import XnInput from '../../components/xn-form/input/input-large.vue';
+	import { check } from '../../common/check.js';
 	export default {
-		name: 'Login',
+		name: 'Forgotpsw',
 		props: {
 			
 		},
@@ -26,11 +33,39 @@
 		},
 		data() {
 			return {
-			
+				email: ''
 			}
 		},
 		methods: {
-
+			onEmailChange(email) {
+				this.email = email;
+			},
+			onEmailBlur() {
+				this.checkAndToast('email', this.email);
+			},
+			checkAndToast(name, value) {
+				let result = check(name, value);
+				if(!result.status) {
+					uni.showToast({
+					    title: result.msg,
+						icon: 'none',
+					    duration: 1500
+					});
+					return false;
+				}
+				return true;
+			},
+			verification() {
+				if(!checkAndToast('email', this.email)) {
+					return false;
+				}
+				return {
+					email: this.email
+				}
+			},
+			submit() {
+				
+			}
 		}
 	}
 </script>

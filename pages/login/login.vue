@@ -1,6 +1,11 @@
 <template>
 	<view class="content">
-		<xn-input class="item" label="用户名"></xn-input>
+		<xn-input 
+			class="item" 
+			label="用户名"
+			@change="onNameChange"
+			@inputBlur="onNameBlur"
+		></xn-input>
 		<xn-input 
 			class="item" 
 			label="密码" 
@@ -8,11 +13,13 @@
 			:bg-status="bgStatus" 
 			:type="bgStatus ? 'text' : 'password'"
 			@bgClick="onBgClick()"
+			@change="onPswChange"
+			@inputBlur="onPswBlur"
 		></xn-input>
 		<view class="forgot-psw">
 			<navigator url="../forgotpsw/forgotpsw">忘记密码?</navigator>
 			</view>
-		<xn-button class="item" text="登录" size="large"></xn-button>
+		<xn-button class="item" text="登录" size="large" @btnClick="submit"></xn-button>
 		<view class="register">
 			<text>没有账号?</text><navigator url="../register/register" class="to-register">去注册</navigator>
 		</view>
@@ -24,6 +31,8 @@
 
 <script>
 	import XnInput from '../../components/xn-form/input/input-large.vue';
+	import { check } from '../../common/check.js';
+	import { login } from '../../network/Login.js';
 	export default {
 		name: 'Login',
 		props: {
@@ -34,12 +43,46 @@
 		},
 		data() {
 			return {
-				bgStatus: false
+				bgStatus: false,
+				username: '',
+				password: ''
 			}
 		},
 		methods: {
 			onBgClick() {
 				this.bgStatus = !this.bgStatus;
+			},
+			onNameChange(name) {
+				this.username = name;
+			},
+			onNameBlur() {
+				this.checkAndToast('name', this.username);
+			},
+			onPswChange(psw) {
+				this.password = psw;
+			},
+			onPswBlur() {
+				this.checkAndToast('password', this.password);
+			},
+			verification() {
+				if(!this.checkAndToast('name', this.username) 
+					|| !this.checkAndToast('password', this.password)) {
+						return false;
+					}
+				return {
+					username: this.username,
+					password: this.password
+				}
+			},
+			submit() {
+				let data = this.verification();
+				if(!data) {
+					return;
+				}
+				login({userinfo: data})
+				.then(res => {
+					
+				})
 			}
 		}
 	}
