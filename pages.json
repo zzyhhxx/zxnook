@@ -82,7 +82,7 @@
             "path" : "pages/register/register",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "注册",
+                "navigationBarTitleText": "欢迎注册",
                 "enablePullDownRefresh": false
             }
             
@@ -124,26 +124,26 @@
 	        "list": [
 				{
 	            "pagePath": "pages/home/home",
-	            "iconPath": "static/address.png",
-	            "selectedIconPath": "static/address.png",
+	            "iconPath": "static/image/tabbar/home.svg",
+	            "selectedIconPath": "static/image/tabbar/home-active.svg",
 	            "text": "首页"
 				}, 
 				{
 	            "pagePath": "pages/trade/trade",
-	            "iconPath": "static/address.png",
-	            "selectedIconPath": "static/address.png",
+	            "iconPath": "static/image/tabbar/trade.svg",
+	            "selectedIconPath": "static/image/tabbar/trade-active.svg",
 	            "text": "淘宠"
 				},
 				{
 				"pagePath": "pages/mall/mall",
-				"iconPath": "static/address.png",
-				"selectedIconPath": "static/address.png",
+				"iconPath": "static/image/tabbar/mall.svg",
+				"selectedIconPath": "static/image/tabbar/mall-active.svg",
 				"text": "商城"
 				}, 
 				{
 	            "pagePath": "pages/profile/profile",
-	            "iconPath": "static/address.png",
-	            "selectedIconPath": "static/address.png",
+	            "iconPath": "static/image/tabbar/profile.svg",
+	            "selectedIconPath": "static/image/tabbar/profile-active.svg",
 	            "text": "我的"
 				}
 			]

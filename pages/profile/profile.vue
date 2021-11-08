@@ -4,7 +4,7 @@
 			<image src="../../static/image/head2.png" mode="" class="image"></image>
 		</view>
 		<view class="user-name">
-			超帅
+			<navigator url="../login/login">去登录</navigator> 
 		</view>
 		<view class="tab-list">
 			<view class="list-item active">

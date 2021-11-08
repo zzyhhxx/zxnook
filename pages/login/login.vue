@@ -1,13 +1,23 @@
 <template>
 	<view class="content">
 		<xn-input class="item" label="用户名"></xn-input>
-		<xn-input class="item" label="密码"></xn-input>
+		<xn-input 
+			class="item" 
+			label="密码" 
+			bgimg="eye"
+			:bg-status="bgStatus" 
+			:type="bgStatus ? 'text' : 'password'"
+			@bgClick="onBgClick()"
+		></xn-input>
 		<view class="forgot-psw">
 			<navigator url="../forgotpsw/forgotpsw">忘记密码?</navigator>
 			</view>
 		<xn-button class="item" text="登录" size="large"></xn-button>
 		<view class="register">
 			<text>没有账号?</text><navigator url="../register/register" class="to-register">去注册</navigator>
+		</view>
+		<view class="bottom">
+			<image src="../../static/image/cat1.svg" mode="" class="image"></image>
 		</view>
 	</view>
 </template>
@@ -24,11 +34,13 @@
 		},
 		data() {
 			return {
-				
+				bgStatus: false
 			}
 		},
 		methods: {
-			
+			onBgClick() {
+				this.bgStatus = !this.bgStatus;
+			}
 		}
 	}
 </script>
@@ -55,5 +67,15 @@
 }
 .to-register {
 	color: var(--color-tint);
+}
+.bottom {
+	width: 438rpx;
+	height: 372rpx;
+	overflow: hidden;
+	margin-top: 150rpx;
+}
+.bottom .image {
+	width: 438rpx;
+	height: 372rpx;
 }
 </style>

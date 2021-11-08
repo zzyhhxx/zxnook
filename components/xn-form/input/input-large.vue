@@ -2,8 +2,11 @@
 	<view>
 		<view class="item">
 			<view class="label">{{label}}</view>
-			<view class="desc">
-				<input :type="type" value="" :placeholder="placeholder" class="input" v-model="inputValue"/>
+			<view 
+				class="desc"
+			>
+				<input :type="type" value="" :placeholder="placeholder" class="input" v-model="inputValue" @blur="onBlur()"/>
+				<view :class="{bgeye: bgimg === 'eye', open: bgStatus, close: !bgStatus}" @click="bgClick()"></view>
 			</view>
 		</view>
 	</view>
@@ -24,6 +27,14 @@
 			type: {
 				type: String,
 				default: 'text'
+			},
+			bgimg: {
+				type: String,
+				default: ''
+			},
+			bgStatus: {
+				type: Boolean,
+				default: false
 			}
 		},
 		data() {
@@ -34,6 +45,14 @@
 		watch:{
 			inputValue(newVal) {
 				this.$emit('change', newVal);
+			}
+		},
+		methods: {
+			bgClick() {
+				this.$emit('bgClick');
+			},
+			onBlur() {
+				this.$emit('inputBlur');
 			}
 		}
 	}
@@ -55,6 +74,7 @@
 	.desc {
 		width: 604rpx;
 		height: 102rpx;
+		position: relative;
 	}
 	.desc .input {
 		width: 100%;
@@ -64,5 +84,23 @@
 		padding: 0 80rpx 0 20rpx;
 		outline:none;
 		box-shadow: none;
+	}
+	.bgeye{
+		position: absolute;
+		content: '';
+		width: 40rpx;
+		height: 40rpx;
+		right: 30rpx;
+		top: 50%;
+		transform: translateY(-50%);
+	}
+	.open {
+		background: url(../../../static/image/eye1.svg) no-repeat;
+		background-size: 40rpx 40rpx;
+		
+	}
+	.close {
+		background: url(../../../static/image/eye2.svg) no-repeat;
+		background-size: 40rpx 40rpx;
 	}
 </style>
