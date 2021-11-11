@@ -3,18 +3,22 @@
 		<xn-input 
 			class="item" 
 			label="用户名"
-			@change="onNameChange"
-			@inputBlur="onNameBlur"
+			propName="username"
+			:defaultValue="username"
+			@change="onChange"
+			@inputBlur="onBlur"
 		></xn-input>
 		<xn-input 
 			class="item" 
 			label="密码" 
 			bgimg="eye"
+			propName="password"
+			:defaultValue="password"
 			:bg-status="bgStatus" 
 			:type="bgStatus ? 'text' : 'password'"
 			@bgClick="onBgClick()"
-			@change="onPswChange"
-			@inputBlur="onPswBlur"
+			@change="onChange"
+			@inputBlur="onBlur"
 		></xn-input>
 		<view class="forgot-psw">
 			<navigator url="../forgotpsw/forgotpsw">忘记密码?</navigator>
@@ -31,8 +35,8 @@
 
 <script>
 	import XnInput from '../../components/xn-form/input/input-large.vue';
-	import { check } from '../../common/check.js';
 	import { login } from '../../network/Login.js';
+	import { checkAndToast } from '../../common/common.js';
 	export default {
 		name: 'Login',
 		props: {
@@ -52,33 +56,20 @@
 			onBgClick() {
 				this.bgStatus = !this.bgStatus;
 			},
-			onNameChange(name) {
-				this.username = name;
+			onChange(e) {
+				let {name, value} = e || {};
+				this[name] = value;
 			},
-			onNameBlur() {
-				this.checkAndToast('name', this.username);
-			},
-			onPswChange(psw) {
-				this.password = psw;
-			},
-			onPswBlur() {
-				this.checkAndToast('password', this.password);
-			},
-			checkAndToast(name, value) {
-				let result = check(name, value);
-				if(!result.status) {
-					uni.showToast({
-					    title: result.msg,
-						icon: 'none',
-					    duration: 1500
-					});
-					return false;
+			onBlur() {
+				let {name, value} = e || {};
+				if(name === 'username') {
+					name = 'name';
 				}
-				return true;
+				checkAndToast(name, value);
 			},
 			verification() {
-				if(!this.checkAndToast('name', this.username) 
-					|| !this.checkAndToast('password', this.password)) {
+				if(!checkAndToast('name', this.username) 
+					|| !checkAndToast('password', this.password)) {
 						return false;
 					}
 				return {

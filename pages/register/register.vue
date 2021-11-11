@@ -3,25 +3,31 @@
 		<xn-input 
 			class="item" 
 			label="用户名"
-			@change="onNameChange"
-			@inputBlur="onNameBlur"
+			propName="username"
+			:defaultValue="username"
+			@change="onChange"
+			@inputBlur="onBlur"
 		></xn-input>
 		<xn-input 
 			class="item" 
 			label="邮箱"
 			type="email"
-			@change="onEmailChange"
-			@inputBlur="onEmailBlur"
+			propName="email"
+			:defaultValue="email"
+			@change="onChange"
+			@inputBlur="onBlur"
 		></xn-input>
 		<xn-input 
 			class="item" 
 			label="密码"
 			bgimg="eye"
+			propName="password"
+			:defaultValue="password"
 			:bg-status="bgStatus" 
 			:type="bgStatus ? 'text' : 'password'"
 			@bgClick="onBgClick()"
-			@change="onPswChange"
-			@inputBlur="onPswBlur"
+			@change="onChange"
+			@inputBlur="onBlur"
 		></xn-input>
 		<xn-button class="item" text="注册" size="large" @btnClick="submit"></xn-button>
 		<view class="register">
@@ -36,10 +42,10 @@
 <script>
 	import XnInput from '../../components/xn-form/input/input-large.vue';
 	
-	import { check } from '../../common/check.js';
 	import { register } from '../../network/Register.js';
 	import { $toast } from '../../common/toast.js';
 	import { setCache } from '../../common/cache.js';
+	import { checkAndToast } from '../../common/common.js';
 	export default {
 		name: 'Register',
 		props: {
@@ -60,40 +66,21 @@
 			onBgClick() {
 				this.bgStatus = !this.bgStatus;
 			},
-			onNameChange(name) {
-				this.username = name;
+			onChange(e) {
+				let {name, value} = e || {};
+				this[name] = value;
 			},
-			onNameBlur() {
-				this.checkAndToast('name', this.username);
-			},
-			onPswChange(psw) {
-				this.password = psw;
-			},
-			onPswBlur() {
-				this.checkAndToast('password', this.password);
-			},
-			onEmailChange(email) {
-				this.email = email;
-			},
-			onEmailBlur() {
-				this.checkAndToast('email', this.email);
-			},
-			checkAndToast(name, value) {
-				let result = check(name, value);
-				if(!result.status) {
-					uni.showToast({
-					    title: result.msg,
-						icon: 'none',
-					    duration: 1500
-					});
-					return false;
+			onBlur(e) {
+				let {name, value} = e || {};
+				if(name === 'username') {
+					name = 'name';
 				}
-				return true;
+				checkAndToast(name, value);
 			},
 			verification() {
-				if(!this.checkAndToast('name', this.username) 
-					|| !this.checkAndToast('email', this.email)
-					|| !this.checkAndToast('password', this.password)) {
+				if(!checkAndToast('name', this.username) 
+					|| !checkAndToast('email', this.email)
+					|| !checkAndToast('password', this.password)) {
 						return false;
 					}
 				return {

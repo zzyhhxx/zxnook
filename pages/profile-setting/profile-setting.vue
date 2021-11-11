@@ -1,32 +1,40 @@
 <template>
 	<view class="content">
 		<view class="top-image" @click="uploadFile">
-			<image src="../../static/image/head2.png" mode="" class="image"></image>
+			<image :src="avatar" mode="" class="image"></image>
 			<image src="../../static/image/icon/add.svg" mode="" class="add"></image>
 		</view>
 		<xn-input
 			class="item" 
 			label="昵称"
-			@change="onNameChange"
-			@inputBlur="onNameBlur"
+			propName="nickName"
+			:defaultValue="nickName"
+			@change="onChange"
+			@inputBlur="onBlur"
 		></xn-input>
 		<xn-input
 			class="item" 
 			label="邮箱"
-			@change="onNameChange"
-			@inputBlur="onNameBlur"
+			propName="email"
+			:defaultValue="email"
+			@change="onChange"
+			@inputBlur="onBlur"
 		></xn-input>
 		<xn-input
 			class="item" 
 			label="新密码"
-			@change="onNameChange"
-			@inputBlur="onNameBlur"
+			propName="password"
+			:defaultValue="password"
+			@change="onChange"
+			@inputBlur="onBlur"
 		></xn-input>
 		<xn-input
 			class="item" 
 			label="再次输入新密码"
-			@change="onNameChange"
-			@inputBlur="onNameBlur"
+			propName="rPassword"
+			:defaultValue="rPassword"
+			@change="onChange"
+			@inputBlur="onBlur"
 		></xn-input>
 		<xn-button class="item" text="保存修改" size="large" @btnClick="submit"></xn-button>
 	</view>
@@ -34,7 +42,10 @@
 
 <script>
 	import XnInput from '../../components/xn-form/input/input-large.vue';
-	import { uploadFile } from '../../common/common.js';
+	import { uploadFile, checkAndToast } from '../../common/common.js';
+	import { $toast } from '../../common/toast.js';
+	import { check } from '../../common/check.js';
+	import { getUser, editUser } from '../../network/Profile.js';
 	export default {
 		name: 'ProfileSetting',
 		components:{
@@ -42,21 +53,90 @@
 		},
 		data() {
 			return {
-				
+				avatar: '../../static/image/default/default-avatar.jpg',
+				nickName: '',
+				email: '',
+				password: '',
+				rPassword: ''
 			}
+		},
+		mounted() {
+			getUser()
+			.then(res => {
+				let {code, msg, data = {}} = res || {};
+				 if(code !== 1) {
+					 $toast(msg);
+				 }else {
+					 let userInfo = data.userInfo || {};
+					 this.avatar = userInfo.avatarUrl || '';
+					 this.nickName = userInfo.nickName || '';
+					 this.email = userInfo.email || '';
+				 }
+			})
 		},
 		methods: {
 			uploadFile() {
-				uploadFile();
+				uploadFile().then(res => {
+					if(Array.isArray(res) && res.length) {
+						this.avatar = res[0];
+					}
+				});
 			},
-			onNameChange() {
-				
+			onChange(e) {
+				let {name, value} = e || {};
+				this[name] = value;
 			},
-			onNameBlur() {
-				
+			onBlur(e) {
+				let {name, value} = e || {};
+				if(name === 'nickName') {
+					name = 'name';
+				}else if(name === 'rPassword') {
+					name = 'password'
+				}
+				checkAndToast(name, value);
+			},
+			validation() {
+				if(!checkAndToast('name', this.nickName) || !checkAndToast('email', this.email)) {
+					return false;
+				}
+				if(this.password) {
+					if(!checkAndToast('password', this.password)
+						|| !checkAndToast('password', this.rPassword)) {
+							return false
+						}
+					if(this.password !== this.rPassword) {
+						$toast('两次输入的密码不一致')
+						return false
+					}
+				}
+				return {
+					nickName: this.nickName,
+					email: this.email,
+					avatarUrl: this.avatar
+				};
 			},
 			submit() {
 				
+				let data = this.validation();
+				console.log(data)
+				if(!data) {
+					return;
+				}
+				if(this.password) {
+					data.password = this.password;
+				}
+				editUser({userInfo: data}).then(res => {
+					let {code, msg, data} = res || {};
+					if(code === 1) {
+						$toast('修改成功').then(() => {
+							uni.navigateBack({
+								delta:1
+							})
+						})
+					}else {
+						$toast('修改失败，请稍后再试')
+					}
+				})
 			}
 		}
 	}

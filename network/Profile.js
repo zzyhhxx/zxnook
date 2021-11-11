@@ -5,3 +5,9 @@ export function getUser(data) {
 		data
 	})
 }
+export function editUser(data) {
+	return request({
+		url: '/index.php?s=/api/user/edit',
+		data
+	})
+}

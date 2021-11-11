@@ -1,5 +1,5 @@
 import { getCache } from '../common/cache.js';
-import { CONFIG } from './Config.js';
+import { CONFIG } from '../common/config.js';
 export function request({url = '', data = {}}) {
 	return new Promise( (resolve, reject) => {
 		uni.request({

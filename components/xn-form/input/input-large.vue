@@ -35,6 +35,14 @@
 			bgStatus: {
 				type: Boolean,
 				default: false
+			},
+			propName: {
+				type: String,
+				default: ''
+			},
+			defaultValue: {
+				type: [String, Number],
+				default: ''
 			}
 		},
 		data() {
@@ -43,8 +51,11 @@
 			}
 		},
 		watch:{
-			inputValue(newVal) {
-				this.$emit('change', newVal);
+			inputValue(newVal, oldVal) {
+				newVal !== oldVal && this.$emit('change', {name: this.propName, value: newVal});
+			},
+			defaultValue(newVal) {
+				newVal && (this.inputValue = newVal);
 			}
 		},
 		methods: {
@@ -52,7 +63,7 @@
 				this.$emit('bgClick');
 			},
 			onBlur() {
-				this.$emit('inputBlur');
+				this.$emit('inputBlur', {name: this.propName, value: this.inputValue});
 			}
 		}
 	}
