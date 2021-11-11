@@ -1,3 +1,4 @@
 export const CONFIG = {
-	DEMAIN: 'https://admin.zxnook.com'
+	DEMAIN: 'https://admin.zxnook.com',
+	WXAPPID: 10002
 }

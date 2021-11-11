@@ -105,6 +105,15 @@
             }
             
         }
+        ,{
+            "path" : "pages/profile-setting/profile-setting",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

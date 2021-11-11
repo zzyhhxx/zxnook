@@ -64,6 +64,18 @@
 			onPswBlur() {
 				this.checkAndToast('password', this.password);
 			},
+			checkAndToast(name, value) {
+				let result = check(name, value);
+				if(!result.status) {
+					uni.showToast({
+					    title: result.msg,
+						icon: 'none',
+					    duration: 1500
+					});
+					return false;
+				}
+				return true;
+			},
 			verification() {
 				if(!this.checkAndToast('name', this.username) 
 					|| !this.checkAndToast('password', this.password)) {

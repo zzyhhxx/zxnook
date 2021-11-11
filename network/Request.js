@@ -6,7 +6,8 @@ export function request({url = '', data = {}}) {
 		    url: `${CONFIG.DEMAIN}${url}`,
 		    data: {
 				...data,
-				token: getCache('token')
+				token: getCache('token'),
+				wxapp_id: CONFIG.WXAPPID
 			},
 			method:'POST',
 		    success: (res) => {

@@ -38,6 +38,8 @@
 	
 	import { check } from '../../common/check.js';
 	import { register } from '../../network/Register.js';
+	import { $toast } from '../../common/toast.js';
+	import { setCache } from '../../common/cache.js';
 	export default {
 		name: 'Register',
 		props: {
@@ -107,6 +109,21 @@
 				}
 				register({userinfo: data})
 				.then(res => {
+					console.log(11111, res);
+					let { data = {}, msg = '' } = res || {};
+					if(data && data.token) {
+						setCache('token', data.token);
+						$toast('注册成功')
+						.then(() => {
+							console.log(333333)
+							uni.reLaunch({
+								url: '../profile/profile'
+							})
+						})
+						
+					}else {
+						msg && $toast(msg)
+					}
 					
 				})
 			}

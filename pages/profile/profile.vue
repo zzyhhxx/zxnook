@@ -1,10 +1,18 @@
 <template>
 	<view class="content">
 		<view class="top-image">
-			<image src="../../static/image/head2.png" mode="" class="image"></image>
+			<navigator url="../profile-setting/profile-setting">
+				<image src="../../static/image/head2.png" mode="" class="image"></image>
+			</navigator>
 		</view>
 		<view class="user-name">
-			<navigator url="../login/login">去登录</navigator> 
+			<navigator 
+				v-if="!Object.keys(userInfo).length"
+				url="../login/login"
+			>去登录</navigator>
+			 <text 
+			 v-else
+			>{{userInfo.username}}</text>
 		</view>
 		<view class="tab-list">
 			<view class="list-item active">
@@ -25,11 +33,24 @@
 </template>
 
 <script>
+	import { getUser } from '../../network/Profile.js';
+	import { $toast } from '../../common/toast.js';
 	export default {
 		data() {
 			return {
-				
+				userInfo: {}
 			}
+		},
+		mounted() {
+			getUser()
+			.then(res => {
+				let {code, msg, data = {}} = res || {};
+				 if(code !== 1) {
+					 $toast(msg);
+				 }else {
+					 this.userInfo = data.userInfo || {};
+				 }
+			})
 		},
 		methods: {
 			
@@ -38,13 +59,6 @@
 </script>
 
 <style scoped>
-	.content {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		background-color: #ffffff;
-	}
 	.top-image {
 		width: 200rpx;
 		height: 200rpx;

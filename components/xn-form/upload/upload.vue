@@ -2,7 +2,7 @@
 	<view>
 		<view class="item">
 			<view class="label">{{label}}</view>
-			<view class="desc">
+			<view class="desc" @click="onClick()">
 				<image src="../../../static/address.png" mode="" class="image"></image>
 			</view>
 		</view>
@@ -28,12 +28,18 @@
 		},
 		data() {
 			return {
-				inputValue: ''
 			}
 		},
 		watch:{
-			inputValue(newVal) {
-				this.$emit('change', newVal);
+			onClick() {
+				uni.chooseImage({
+				    count: 9, //默认9
+				    sizeType: ['compressed'], //可以指定是原图还是压缩图，默认二者都有
+				    sourceType: ['album'], //从相册选择
+				    success: function (res) {
+				        console.log(JSON.stringify(res.tempFilePaths));
+				    }
+				});
 			}
 		}
 	}
