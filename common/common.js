@@ -21,6 +21,11 @@ export async function uploadFile() {
 }
 
 export function checkAndToast(name, value) {
+	if(name === 'nickName' || name === 'username') {
+		name = 'name';
+	}else if(name === 'rPassword') {
+		name = 'password'
+	}
 	let result = check(name, value);
 	if(!result.status) {
 		$toast(result.msg)

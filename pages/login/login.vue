@@ -62,9 +62,6 @@
 			},
 			onBlur() {
 				let {name, value} = e || {};
-				if(name === 'username') {
-					name = 'name';
-				}
 				checkAndToast(name, value);
 			},
 			verification() {

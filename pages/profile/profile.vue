@@ -1,8 +1,8 @@
 <template>
 	<view class="content">
 		<view class="top-image">
-			<navigator url="../profile-setting/profile-setting">
-				<image src="../../static/image/head2.png" mode="" class="image"></image>
+			<navigator url="../profile-setlist/profile-setlist">
+				<image :src="userInfo.avatarUrl || '../../static/image/default/default-avatar.jpg'" mode="" class="image"></image>
 			</navigator>
 		</view>
 		<view class="user-name">
@@ -12,7 +12,7 @@
 			>去登录</navigator>
 			 <text 
 			 v-else
-			>{{userInfo.username}}</text>
+			>{{userInfo.nickName || userInfo.username}}</text>
 		</view>
 		<view class="tab-list">
 			<view class="list-item active">
@@ -42,18 +42,23 @@
 			}
 		},
 		mounted() {
-			getUser()
-			.then(res => {
-				let {code, msg, data = {}} = res || {};
-				 if(code !== 1) {
-					 $toast(msg);
-				 }else {
-					 this.userInfo = data.userInfo || {};
-				 }
-			})
+			this.init();
+		},
+		onShow() {
+			this.init();
 		},
 		methods: {
-			
+			init() {
+				getUser()
+				.then(res => {
+					let {code, msg, data = {}} = res || {};
+					 if(code !== 1) {
+						 $toast(msg);
+					 }else {
+						 this.userInfo = data.userInfo || {};
+					 }
+				})
+			}
 		}
 	}
 </script>

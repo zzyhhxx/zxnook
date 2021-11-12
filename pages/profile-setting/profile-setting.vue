@@ -61,20 +61,23 @@
 			}
 		},
 		mounted() {
-			getUser()
-			.then(res => {
-				let {code, msg, data = {}} = res || {};
-				 if(code !== 1) {
-					 $toast(msg);
-				 }else {
-					 let userInfo = data.userInfo || {};
-					 this.avatar = userInfo.avatarUrl || '';
-					 this.nickName = userInfo.nickName || '';
-					 this.email = userInfo.email || '';
-				 }
-			})
+			this.init();
 		},
 		methods: {
+			init() {
+				getUser()
+				.then(res => {
+					let {code, msg, data = {}} = res || {};
+					 if(code !== 1) {
+						 $toast(msg);
+					 }else {
+						 let userInfo = data.userInfo || {};
+						 this.avatar = userInfo.avatarUrl || '';
+						 this.nickName = userInfo.nickName || '';
+						 this.email = userInfo.email || '';
+					 }
+				})
+			},
 			uploadFile() {
 				uploadFile().then(res => {
 					if(Array.isArray(res) && res.length) {
@@ -88,11 +91,6 @@
 			},
 			onBlur(e) {
 				let {name, value} = e || {};
-				if(name === 'nickName') {
-					name = 'name';
-				}else if(name === 'rPassword') {
-					name = 'password'
-				}
 				checkAndToast(name, value);
 			},
 			validation() {
@@ -116,7 +114,6 @@
 				};
 			},
 			submit() {
-				
 				let data = this.validation();
 				console.log(data)
 				if(!data) {

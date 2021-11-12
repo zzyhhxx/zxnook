@@ -72,9 +72,6 @@
 			},
 			onBlur(e) {
 				let {name, value} = e || {};
-				if(name === 'username') {
-					name = 'name';
-				}
 				checkAndToast(name, value);
 			},
 			verification() {
@@ -102,7 +99,6 @@
 						setCache('token', data.token);
 						$toast('注册成功')
 						.then(() => {
-							console.log(333333)
 							uni.reLaunch({
 								url: '../profile/profile'
 							})
