@@ -1,9 +1,12 @@
 <template>
 	<view class="content">
 		<view class="top-image">
-			<navigator url="../profile-setlist/profile-setlist">
+			<navigator v-if="Object.keys(userInfo).length" url="../profile-setlist/profile-setlist">
 				<image :src="userInfo.avatarUrl || '../../static/image/default/default-avatar.jpg'" mode="" class="image"></image>
 			</navigator>
+			<view v-else>
+				<image src="../../static/image/default/default-avatar.jpg" mode="" class="image"></image>
+			</view>
 		</view>
 		<view class="user-name">
 			<navigator 
@@ -34,7 +37,7 @@
 
 <script>
 	import { getUser } from '../../network/Profile.js';
-	import { $toast } from '../../common/toast.js';
+	import { $toast } from '../../common/common.js';
 	export default {
 		data() {
 			return {

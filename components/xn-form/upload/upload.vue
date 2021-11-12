@@ -2,14 +2,26 @@
 	<view>
 		<view class="item">
 			<view class="label">{{label}}</view>
-			<view class="desc" @click="onClick()">
-				<image src="../../../static/address.png" mode="" class="image"></image>
+			<view 
+				v-show="!imgsrc"
+				class="desc bgcolor"
+				@click="onClick()"
+			>
+				<image src="../../../static/image/icon/camera.png" mode="" class="image"></image>
+			</view>
+			<view
+				v-show="imgsrc"
+				class="desc"
+				@click="onClick()"
+			>
+				<image :src="imgsrc" mode="" class="dimage"></image>
 			</view>
 		</view>
 	</view>
 </template>
 
 <script>
+	import {uploadFile} from '../../../common/common.js';
 	export default {
 		name: 'Input',
 		props: {
@@ -24,22 +36,33 @@
 			type: {
 				type: String,
 				default: 'text'
+			},
+			propName: {
+				type: String,
+				default: ''
+			},
+			defaultValue: {
+				type: String,
+				default: ''
 			}
 		},
 		data() {
 			return {
+				editUrl: ''
 			}
 		},
-		watch:{
+		computed: {
+			imgsrc() {
+				return this.editUrl || this.defaultValue;
+			}
+		},
+		methods:{
 			onClick() {
-				uni.chooseImage({
-				    count: 9, //默认9
-				    sizeType: ['compressed'], //可以指定是原图还是压缩图，默认二者都有
-				    sourceType: ['album'], //从相册选择
-				    success: function (res) {
-				        console.log(JSON.stringify(res.tempFilePaths));
-				    }
-				});
+				uploadFile().then(res => {
+					if(Array.isArray(res) && res.length) {
+						this.editUrl = res[0];
+					}
+				})
 			}
 		}
 	}
@@ -62,8 +85,11 @@
 		width: 100rpx;
 		height: 100rpx;
 		border-radius: 50%;
-		background-color: #666666;
 		position: relative;
+		overflow: hidden;
+	}
+	.bgcolor {
+		background-color: #666666;
 	}
 	.desc .image {
 		position: absolute;
@@ -72,5 +98,9 @@
 		top: 50%;
 		left: 50%;
 		transform: translate(-50%, -50%);
+	}
+	.desc .dimage {
+		width: 100rpx;
+		height: 100rpx;
 	}
 </style>

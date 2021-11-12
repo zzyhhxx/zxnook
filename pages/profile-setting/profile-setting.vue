@@ -1,7 +1,7 @@
 <template>
 	<view class="content">
 		<view class="top-image" @click="uploadFile">
-			<image :src="avatar" mode="" class="image"></image>
+			<image :src="avatar || '../../static/image/default/default-avatar.jpg'" mode="" class="image"></image>
 			<image src="../../static/image/icon/add.svg" mode="" class="add"></image>
 		</view>
 		<xn-input
@@ -42,8 +42,7 @@
 
 <script>
 	import XnInput from '../../components/xn-form/input/input-large.vue';
-	import { uploadFile, checkAndToast } from '../../common/common.js';
-	import { $toast } from '../../common/toast.js';
+	import { uploadFile, checkAndToast, $toast } from '../../common/common.js';
 	import { check } from '../../common/check.js';
 	import { getUser, editUser } from '../../network/Profile.js';
 	export default {

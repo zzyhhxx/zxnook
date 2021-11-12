@@ -43,9 +43,8 @@
 	import XnInput from '../../components/xn-form/input/input-large.vue';
 	
 	import { register } from '../../network/Register.js';
-	import { $toast } from '../../common/toast.js';
 	import { setCache } from '../../common/cache.js';
-	import { checkAndToast } from '../../common/common.js';
+	import { checkAndToast, $toast } from '../../common/common.js';
 	export default {
 		name: 'Register',
 		props: {

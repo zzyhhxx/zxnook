@@ -2,7 +2,7 @@
 	<view class="content">
 		<xn-input 
 			class="item" 
-			label="用户名"
+			label="账号"
 			propName="username"
 			:defaultValue="username"
 			@change="onChange"
@@ -36,7 +36,8 @@
 <script>
 	import XnInput from '../../components/xn-form/input/input-large.vue';
 	import { login } from '../../network/Login.js';
-	import { checkAndToast } from '../../common/common.js';
+	import { setCache } from '../../common/cache.js';
+	import { checkAndToast, $toast } from '../../common/common.js';
 	export default {
 		name: 'Login',
 		props: {
@@ -60,7 +61,7 @@
 				let {name, value} = e || {};
 				this[name] = value;
 			},
-			onBlur() {
+			onBlur(e) {
 				let {name, value} = e || {};
 				checkAndToast(name, value);
 			},
@@ -81,7 +82,19 @@
 				}
 				login({userinfo: data})
 				.then(res => {
-					
+					let { data = {}, msg = '' } = res || {};
+					if(data && data.token) {
+						setCache('token', data.token);
+						$toast('登录成功')
+						.then(() => {
+							uni.reLaunch({
+								url: '../profile/profile'
+							})
+						})
+						
+					}else {
+						$toast(msg)
+					}
 				})
 			}
 		}

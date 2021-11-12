@@ -109,7 +109,7 @@
             "path" : "pages/profile-setting/profile-setting",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "",
+                "navigationBarTitleText": "修改信息",
                 "enablePullDownRefresh": false
             }
             
@@ -118,7 +118,7 @@
             "path" : "pages/profile-setlist/profile-setlist",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "",
+                "navigationBarTitleText": "设置",
                 "enablePullDownRefresh": false
             }
             

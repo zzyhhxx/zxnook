@@ -1,6 +1,5 @@
 import { CONFIG } from "./config.js";
 import { getCache } from '../common/cache.js';
-import { $toast } from './toast.js';
 import { check } from './check.js';
 export async function uploadFile() {
 	return new Promise(resolve => {
@@ -33,6 +32,21 @@ export function checkAndToast(name, value) {
 	}
 	return true;
 }
+export function $toast(title) {
+	return new Promise(resolve => {
+		if(title) {
+			uni.showToast({
+			    title,
+				icon: 'none',
+			    duration: 1500
+			});
+		}
+		setTimeout(() => {
+			resolve('success')
+		}, 1500);
+	})
+	
+}
 function _uploadFile(files, result = []) {
 	if(!files.length) {
 		return result;
@@ -60,6 +74,4 @@ function _uploadFile(files, result = []) {
 				}
 		})
 	})
-	
-	
 }
