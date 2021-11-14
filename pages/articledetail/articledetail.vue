@@ -1,6 +1,11 @@
 <template>
-	<view>
-		
+	<view class="content">
+		<view class="title">
+			
+		</view>
+		<view class="pesc">
+			
+		</view>
 	</view>
 </template>
 
@@ -17,6 +22,6 @@
 	}
 </script>
 
-<style>
+<style scoped>
 
 </style>

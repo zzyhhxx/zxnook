@@ -24,6 +24,14 @@
 			type: {
 				type: String,
 				default: 'text'
+			},
+			propName: {
+				type: String,
+				default: ''
+			},
+			defaultVaule: {
+				type: String,
+				default: ''
 			}
 		},
 		data() {
@@ -33,7 +41,7 @@
 		},
 		watch:{
 			inputValue(newVal) {
-				this.$emit('change', newVal);
+				this.$emit('change', {name: this.propName, value: newVal});
 			}
 		}
 	}

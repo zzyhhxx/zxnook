@@ -31,6 +31,10 @@
 		   currentIndex: {
 			   type: Number,
 			   default: 0
+		   },
+		   propName: {
+			   type: String,
+			   default: ''
 		   }
 			
 	   },
@@ -40,7 +44,7 @@
        },
        methods: {
             bindPickerChange: function(e) {
-				this.$emit('select', e.target.value);
+				this.$emit('select', {name: this.propName, value: e.target.value});
 		    }
        }
    }

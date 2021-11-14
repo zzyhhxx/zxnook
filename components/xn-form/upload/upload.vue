@@ -61,6 +61,7 @@
 				uploadFile().then(res => {
 					if(Array.isArray(res) && res.length) {
 						this.editUrl = res[0];
+						this.$emit('change', {name: this.propName, value: this.editUrl});
 					}
 				})
 			}

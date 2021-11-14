@@ -21,6 +21,10 @@
 		   label: {
 			   type: String,
 			   default: ''
+		   },
+		   propName: {
+			   type: String,
+			   default: ''
 		   }
 	   },
        data() {
@@ -39,10 +43,13 @@
                return this.getDate('end');
            }
        },
+	   mounted() {
+		   this.$emit('change', {name: this.propName, value: this.date});
+	   },
        methods: {
            bindDateChange: function(e) {
                this.date = e.target.value;
-			   this.$emit('change', this.date);
+			   this.$emit('change', {name: this.propName, value: newVal});
            },
            getDate(type) {
                const date = new Date();

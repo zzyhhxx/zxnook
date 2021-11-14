@@ -38,11 +38,15 @@
 			currentIndex: {
 				type: Number,
 				default: 0
+			},
+			propName: {
+				type: String,
+				default: ''
 			}
 		},
 		methods: {
 			btnClick(index) {
-				this.$emit('btnClick', index);
+				this.$emit('btnClick', {name: this.propName, value: index});
 			}
 		}
 	}
