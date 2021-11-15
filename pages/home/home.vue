@@ -1,6 +1,8 @@
 <template>
 	<view class="content" v-if="isReady">
-		<card-pet></card-pet>
+		<card-pet
+			:petInfo="petInfo"
+		></card-pet>
 		<tab-control 
 			ref="tabcontrol"
 			:currentIndex="currentIndex" 
@@ -24,7 +26,7 @@
 </template>
 
 <script>
-	import { getPetInfo, getTabList, getContentList } from '../../network/Home.js';
+	import { getPet } from '../../network/Pet.js';
 	export default {
 		data() {
 			return {
@@ -41,8 +43,13 @@
 		},
 		methods: {
 			async init() {
-				// let result = await Promise.all([getPetInfo(), getTabList(), getContentList()]);
-				
+				let result = await Promise.all([getPet()]);
+				let {code, msg, data} = result[0] || {};
+				if(code === 1) {
+					if(Array.isArray(data) && data.length) {
+						this.petInfo = data[data.length - 1];
+					}
+				}
 			},
 			onTabClick(e) {
 				this.currentIndex = e;

@@ -1,46 +1,43 @@
 <template>
 	<view class="card">
-		<template v-if="hasPet">
+		<view v-if="hasPet">
 			<view class="left">
-				<image src="../../static/image/dog3.png" mode="" class="image"></image>
+				<image :src="petInfo.petAvatar" mode="" class="image"></image>
 			</view>
 			<view class="right">
-				<view class="pet-name">heiheihei</view>
+				<view class="pet-name">{{petInfo.petName}}</view>
 				<view class="pet-info">
 					<view class="icon">
 						<image src="../../static/pet.png" mode="" class="image"></image>
 					</view>
 					<view class="info-name">性别：</view>
-					<view class="info-desc">gg</view>
+					<view class="info-desc">{{gender}}</view>
 				</view>
 				<view class="pet-info">
 					<view class="icon">
-						<image src="../../static/pet.png" mode="" class="image"></image>
+						<image src="../../static/address.png" mode="" class="image"></image>
 					</view>
 					<view class="info-name">年龄：</view>
-					<view class="info-desc">12</view>
+					<view class="info-desc">{{age}}</view>
 				</view>
 			</view>
-		</template>
-		<template v-else>
+		</view>
+		<view v-else>
 			<xn-button
 				class="btn"
 				text="添加宠物"
 				@btnClick="onClick"
 			></xn-button>
-		</template>
+		</view>
 		
 	</view>
 </template>
 
 <script>
+	import {getTimeText, timeFormat} from '../../common/common.js';
 	export default {
 		name:"card-pet",
 		props: {
-			hasPet: {
-				type: Boolean,
-				default: false
-			},
 			petInfo: {
 				type: Object,
 				default() {
@@ -53,9 +50,38 @@
 				
 			};
 		},
+		computed:{
+			hasPet() {
+				console.log(555555, this.petInfo)
+				return Object.keys(this.petInfo).length;
+			},
+			gender() {
+				return this.petInfo.petGender === 1 
+					? 'GG' 
+					: this.petInfo.petGender === 2
+					? 'MM'
+					: ''
+			},
+			age() {
+				let timestamp = Math.floor(new Date().getTime()/1000 - this.petInfo.petBirthday);
+				let {year, month, day} = getTimeText(timestamp);
+				console.log(getTimeText(timestamp), timeFormat('yyyy-MM-dd hh:mm:ss', new Date(this.petInfo.petBirthday * 1000)))
+				if(year >= 1) {
+					return `${year}岁${month}个月`;
+				}
+				else if(month >= 1) {
+					return `${month}个月${day}天`;
+				}
+				else if(day > 1) {
+					return `${day}天`;
+				}
+				else {
+					return `0天`;
+				}
+			}
+		},
 		methods:{
 			onClick() {
-				console.log(111111)
 				uni.navigateTo({
 					url: '/pages/addpet/addpet',
 					fail: () => {

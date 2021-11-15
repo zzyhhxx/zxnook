@@ -47,6 +47,41 @@ export function $toast(title) {
 	})
 	
 }
+export function getTimeText(timestamp) {
+	let second = timestamp % 60;
+	let hour = Math.floor(timestamp / 3600) % 24;
+	let minute = Math.floor((timestamp % 3600) / 60);
+	let day = Math.floor(timestamp / 86400);
+	let month = Math.floor(day / 30);
+	let year = Math.floor(month / 12);
+	return {second, minute, hour, day, month, year};
+}
+//'yyyy-MM-dd hh:mm:ss', new Date(timestamp * 1000)
+export function timeFormat(format, d) {
+    	if(d == null) {
+    		d = new Date();
+    	}
+        var date = {
+            "M+": d.getMonth() + 1,
+            "d+": d.getDate(),
+            "h+": d.getHours(),
+            "m+": d.getMinutes(),
+            "s+": d.getSeconds(),
+            "q+": Math.floor((d.getMonth() + 3) / 3),
+            "S+": d.getMilliseconds()
+        };
+        if (/(y+)/i.test(format)) {
+            format = format.replace(RegExp.$1, (d.getFullYear() + '').substr(4 - RegExp.$1.length));
+        }
+        for (var k in date) {
+            if (new RegExp("(" + k + ")").test(format)) {
+                format = format.replace(RegExp.$1, RegExp.$1.length == 1
+                    ? date[k] : ("00" + date[k]).substr(("" + date[k]).length));
+            }
+        }
+        return format;
+    }
+
 function _uploadFile(files, result = []) {
 	if(!files.length) {
 		return result;

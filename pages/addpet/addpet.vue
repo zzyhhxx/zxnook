@@ -1,9 +1,10 @@
 <template>
 	<view class="content">
 		<xn-upload 
-			class="form-item" l
-			abel="宠物头像"
+			class="form-item"
+			label="宠物头像"
 			propName="petAvatar"
+			@change="onChange"
 		></xn-upload>
 		<xn-input 
 			class="form-item" 
@@ -25,7 +26,7 @@
 			label="宠物类型"
 			propName="petType"
 			:currentIndex="typeIndex"
-			:list="typeList"
+			:list="typeListName"
 			@select="onChange"
 		></xn-select>
 		<xn-select 
@@ -33,7 +34,7 @@
 			label="宠物品种"
 			propName="petBreed"
 			:currentIndex="breedIndex"
-			:list="breedList"
+			:list="breedListName"
 			@select="onChange"
 		></xn-select>
 		<xn-date 
@@ -84,9 +85,9 @@
 				radioIndex: 0,
 				genderRatio: [{value: '1', name: 'GG'}, {value: '2', name: 'MM'},],
 				typeIndex: 0,
-				typeList: ['猫猫', '狗狗', '兔兔', '鸟鸟'],
+				typeList: [{value: 1, name: '猫猫'}, {value: 2, name: '狗狗'}, {value: 3, name: '兔兔'}, {value: 4, name: '鸟鸟'}],
 				breedIndex: 0,
-				breedList: ['中华田园犬', '萨摩耶', '金毛', '阿拉斯加', '牧羊犬'],
+				breedList: [{value: 1, name: '中华田园犬'}, {value: 2, name: '萨摩耶'}, {value: 3, name: '金毛'}, {value: 4, name: '阿拉斯加'}],
 				sterilisationIndex: 0,
 				sterilisationList: [{value: '1', name: '未绝育'}, {value: '2', name: '已绝育'},],
 				
@@ -110,12 +111,24 @@
 		created() {
 			this.init();
 		},
+		computed:{
+			typeListName() {
+				return this.typeList.map(item => {
+					return item.name;
+				})
+			},
+			breedListName() {
+				return this.breedList.map(item => {
+					return item.name;
+				})
+			}
+		},
 		methods: {
 			async init() {
 				let result = await Promise.all([getType, getBreed]);
-				this.petType = this.typeList[this.typeIndex];
+				this.petType = this.typeList[this.typeIndex].value;
 				this.petGender = this.genderRatio[this.radioIndex].value;
-				this.petBreed = this.breedList[this.breedIndex];
+				this.petBreed = this.breedList[this.breedIndex].value;
 				this.isSterilisation = this.sterilisationList[this.sterilisationIndex].value;
 			},
 			onChange(e) {
@@ -123,10 +136,16 @@
 				let {name, value} = e || {};
 				if(name === 'isSterilisation') {
 					this.sterilisationIndex = value;
-					this.isSterilisation = this.sterilisationList[value];
+					this.isSterilisation = this.sterilisationList[value].value;
 				}else if(name === 'petGender') {
 					this.radioIndex = value;
-					this.petGender = this.genderRatio[value];
+					this.petGender = this.genderRatio[value].value;
+				}else if(name === 'petType') {
+					this.typeIndex = value;
+					this.petType = this.typeList[value].value;
+				}else if(name === 'petBreed') {
+					this.breedIndex = value;
+					this.petBreed = this.breedList[value].value;
 				}else {
 					this[name] = value;
 				}
@@ -136,14 +155,14 @@
 					$toast('宠物名不能为空');
 				}
 				let data = {
-					petAvatar: this.petAvatar,
-					petName: this.petName,
-					petGender: this.petGender,
-					petType: this.petType,
-					petBreed: this.petBreed,
-					birthday: this.birthday,
-					homeDay: this.homeDay,
-					isSterilisation: this.isSterilisation
+					pet_avatar: this.petAvatar,
+					pet_name: this.petName,
+					pet_gender: this.petGender,
+					pet_type: this.petType,
+					pet_breed: this.petBreed,
+					pet_birthday: this.birthday,
+					pet_homday: this.homeDay,
+					is_sterilisation: this.isSterilisation
 				}
 				return data;
 			},
@@ -154,7 +173,7 @@
 					return;
 				}
 				this.buttonStatus = 'unusable';
-				addPet(data)
+				addPet({petData: data})
 				.then(res => {
 					let { code, msg, data } = res || {};
 					if(code === 1) {
