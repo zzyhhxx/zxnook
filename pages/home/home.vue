@@ -14,10 +14,6 @@
 			:currentIndex="currentIndex" 
 			@tabClick="onTabClick" 
 		></tab-control>
-		<card-bigpic></card-bigpic>
-		<card-bigpic></card-bigpic>
-		<card-bigpic></card-bigpic>
-		<card-bigpic></card-bigpic>
 		<card-content></card-content>
 		<card-content></card-content>
 		<card-content></card-content>
