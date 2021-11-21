@@ -14,15 +14,18 @@
 			:currentIndex="currentIndex" 
 			@tabClick="onTabClick" 
 		></tab-control>
-		<card-content></card-content>
-		<card-content></card-content>
-		<card-content></card-content>
-		<card-content></card-content>
+		
+		<card-content
+			v-for="(item, index) in articleList"
+			:key="index"
+			:info="item"
+		></card-content>
 	</view>
 </template>
 
 <script>
 	import { getPet } from '../../network/Pet.js';
+	import { getArticleList } from '../../network/Article.js';
 	export default {
 		data() {
 			return {
@@ -31,7 +34,8 @@
 				showFixTabControl: false,
 				petInfo:{},
 				tabList:[],
-				contentList:[]
+				contentList:[],
+				articleList:[]
 			}
 		},
 		onLoad() {
@@ -39,13 +43,20 @@
 		},
 		methods: {
 			async init() {
-				let result = await Promise.all([getPet()]);
+				let result = await Promise.all([getPet(),getArticleList()]);
 				let {code, msg, data} = result[0] || {};
+				console.log(333333, result);
 				if(code === 1) {
 					if(Array.isArray(data) && data.length) {
 						this.petInfo = data[data.length - 1];
 					}
 				}
+				let articleData = result[1] ? result[1].data : {};
+				if(articleData.list && articleData.list.data) {
+					this.articleList = articleData.list.data;
+				}
+				console.log('articlelist', this.articleList)
+				
 			},
 			onTabClick(e) {
 				this.currentIndex = e;
