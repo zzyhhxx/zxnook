@@ -2,6 +2,7 @@
 	<view class="content" v-if="isReady">
 		<card-pet
 			:petInfo="petInfo"
+			@changePet="onChangePet"
 		></card-pet>
 		<tab-control 
 			ref="tabcontrol"
@@ -14,19 +15,22 @@
 			:currentIndex="currentIndex" 
 			@tabClick="onTabClick" 
 		></tab-control>
-		<card-bigpic></card-bigpic>
-		<card-bigpic></card-bigpic>
-		<card-bigpic></card-bigpic>
-		<card-bigpic></card-bigpic>
 		<card-content></card-content>
 		<card-content></card-content>
 		<card-content></card-content>
 		<card-content></card-content>
+		<xn-popup 
+			:isShow="showPetList"
+			title="切换宠物"
+			:list="[{value: 'hhjh'}, {value: 'ooo'}]"
+			@maskClick="onMaskClick"
+		></xn-popup>
 	</view>
 </template>
 
 <script>
 	import { getPet } from '../../network/Pet.js';
+	import {computed, ref, reactive} from 'vue';
 	export default {
 		data() {
 			return {
@@ -35,11 +39,15 @@
 				showFixTabControl: false,
 				petInfo:{},
 				tabList:[],
-				contentList:[]
+				contentList:[],
+				showPetList: false
 			}
 		},
 		onLoad() {
 			this.init();
+		},
+		setup(props, {slots, attrs, emit}) {
+			console.log(333333333, props, slots, attrs, emit);
 		},
 		methods: {
 			async init() {
@@ -60,6 +68,12 @@
 				if(this.showFixTabControl !== showFixTabControl) {
 					this.showFixTabControl = showFixTabControl;
 				}
+			},
+			onChangePet() {
+				this.showPetList = !this.showPetList;
+			},
+			onMaskClick() {
+				this.showPetList = false;
 			}
 		}
 	}

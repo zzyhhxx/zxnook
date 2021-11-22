@@ -1,6 +1,6 @@
 <template>
 	<view class="card">
-		<view v-if="hasPet">
+		<view v-if="hasPet" class="card-content">
 			<view class="left">
 				<image :src="petInfo.petAvatar" mode="" class="image"></image>
 			</view>
@@ -20,6 +20,9 @@
 					<view class="info-name">年龄：</view>
 					<view class="info-desc">{{age}}</view>
 				</view>
+			</view>
+			<view class="change-pet" @click="changePet()">
+				切换宠物
 			</view>
 		</view>
 		<view v-else>
@@ -52,7 +55,6 @@
 		},
 		computed:{
 			hasPet() {
-				console.log(555555, this.petInfo)
 				return Object.keys(this.petInfo).length;
 			},
 			gender() {
@@ -65,7 +67,6 @@
 			age() {
 				let timestamp = Math.floor(new Date().getTime()/1000 - this.petInfo.petBirthday);
 				let {year, month, day} = getTimeText(timestamp);
-				console.log(getTimeText(timestamp), timeFormat('yyyy-MM-dd hh:mm:ss', new Date(this.petInfo.petBirthday * 1000)))
 				if(year >= 1) {
 					return `${year}岁${month}个月`;
 				}
@@ -90,6 +91,9 @@
 						});
 					},
 				});
+			},
+			changePet() {
+				this.$emit('changePet');
 			}
 		}
 	}
@@ -161,7 +165,9 @@
 	.pet-name {
 		font-size: 44rpx;
 	}
-	.add-btn {
-		
+	.change-pet {
+		position: absolute;
+		top: 20rpx;
+		right: 20rpx;
 	}
 </style>
