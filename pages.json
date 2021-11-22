@@ -150,14 +150,14 @@
 	            "pagePath": "pages/trade/trade",
 	            "iconPath": "static/image/tabbar/trade.svg",
 	            "selectedIconPath": "static/image/tabbar/trade-active.svg",
-	            "text": "淘宠"
+	            "text": "领养"
 				},
-				{
-				"pagePath": "pages/mall/mall",
-				"iconPath": "static/image/tabbar/mall.svg",
-				"selectedIconPath": "static/image/tabbar/mall-active.svg",
-				"text": "商城"
-				}, 
+				// {
+				// "pagePath": "pages/mall/mall",
+				// "iconPath": "static/image/tabbar/mall.svg",
+				// "selectedIconPath": "static/image/tabbar/mall-active.svg",
+				// "text": "商城"
+				// }, 
 				{
 	            "pagePath": "pages/profile/profile",
 	            "iconPath": "static/image/tabbar/profile.svg",

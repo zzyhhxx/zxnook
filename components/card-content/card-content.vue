@@ -1,27 +1,19 @@
 <template>
 	<view class="card">
 		<view class="left">
-			<image src="../../static/dog2.png" class="left-image"></image>
+			<image :src="info.image.filePath" class="left-image"></image>
 		</view>
 		<view class="right">
 			<view class="user-info">
 				<view class="user-text">
-					<view class="user-name">你是猪吗</view>
-					<view class="pet-name">是的</view>
+					<view class="user-name">{{info.articleTitle}}</view>
+					<view class="pet-name">{{info.viewTime}}</view>
 				</view>
 			</view>
 			<view class="gender">
-				<view class="gender-image">
-					<image src="../../static/pet.png" mode="" class="image"></image>
-				</view>
-				<view class="text">Gender : male</view>
+				<view class="text"></view>
 			</view>
-			<view class="address">
-				<view class="address-image">
-					<image src="../../static/address.png" mode="" class="image"></image>
-				</view>
-				<view class="text">274 East Alderwood Drive.</view>
-			</view>
+		
 		</view>
 	</view>
 </template>
@@ -29,6 +21,14 @@
 <script>
 	export default {
 		name:"content-card",
+		props:{
+			info: {
+				type: Object,
+				default() {
+					return {}
+				}
+			}
+		},
 		data() {
 			return {
 				
