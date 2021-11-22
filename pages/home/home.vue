@@ -15,17 +15,24 @@
 			:currentIndex="currentIndex" 
 			@tabClick="onTabClick" 
 		></tab-control>
-		<card-content></card-content>
-		<card-content></card-content>
-		<card-content></card-content>
-		<card-content></card-content>
 		<xn-popup 
 			:isShow="showPetList"
 			title="切换宠物"
-			:list="[{value: 'hhjh'}, {value: 'ooo'}]"
 			@maskClick="onMaskClick"
-		></xn-popup>
-		
+		>
+			<view 
+				v-for="item in 100" 
+				:key="item"
+				class="pet-item"
+			>
+				<view class="pet-item-icon">
+					<image src="../../static/image/icon/edit.svg" mode="" class="icon-image"></image>
+				</view>
+				<view class="pet-item-name" :class="{active: item === 1}">
+					{{'宠物'+ item}}
+				</view>
+			</view>
+		</xn-popup>
 		<card-content
 			v-for="(item, index) in articleList"
 			:key="index"
@@ -36,7 +43,6 @@
 
 <script>
 	import { getPet } from '../../network/Pet.js';
-	import {computed, ref, reactive} from 'vue';
 	import { getArticleList } from '../../network/Article.js';
 	export default {
 		data() {
@@ -54,14 +60,10 @@
 		onLoad() {
 			this.init();
 		},
-		setup(props, {slots, attrs, emit}) {
-			console.log(333333333, props, slots, attrs, emit);
-		},
 		methods: {
 			async init() {
 				let result = await Promise.all([getPet(),getArticleList()]);
 				let {code, msg, data} = result[0] || {};
-				console.log(333333, result);
 				if(code === 1) {
 					if(Array.isArray(data) && data.length) {
 						this.petInfo = data[data.length - 1];
@@ -71,8 +73,6 @@
 				if(articleData.list && articleData.list.data) {
 					this.articleList = articleData.list.data;
 				}
-				console.log('articlelist', this.articleList)
-				
 			},
 			onTabClick(e) {
 				this.currentIndex = e;
@@ -114,5 +114,33 @@
 		left: 0;
 		right: 0;
 		margin: 0 auto;
+	}
+	.pet-item {
+		display: flex;
+		height: 100rpx;
+		line-height: 100rpx;
+		width: 100%;
+	}
+	.pet-item-icon {
+		margin-left: 20rpx;
+		width: 48rpx;
+		height: 48rpx;
+		overflow: hidden;
+		position: relative;
+		align-self: center;
+	}
+	.pet-item-icon .icon-image {
+		width: 48rpx;
+		height: 48rpx;
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+	.pet-item-name {
+		flex: 1;
+		margin-left: 20rpx;
+	}
+	.pet-item-name.active {
+		background-color: #FFF4F4;
 	}
 </style>

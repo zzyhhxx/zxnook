@@ -4,76 +4,7 @@
 		<view class="propup" :class="{show: isShow}" @touchmove.prevent>
 			<view class="prop-title">{{title}}</view>
 			<scroll-view class="prop-list" scroll-y="true">
-				<view
-					v-for="(item, index) in list"
-					:key="index"
-					class="item"
-				>
-				{{item.value}}
-				</view>
-				<view
-					v-for="(item, index) in list"
-					:key="index"
-					class="item"
-				>
-				{{item.value}}
-				</view>
-				<view
-					v-for="(item, index) in list"
-					:key="index"
-					class="item"
-				>
-				{{item.value}}
-				</view>
-				<view
-					v-for="(item, index) in list"
-					:key="index"
-					class="item"
-				>
-				{{item.value}}
-				</view>
-				<view
-					v-for="(item, index) in list"
-					:key="index"
-					class="item"
-				>
-				{{item.value}}
-				</view>
-				<view
-					v-for="(item, index) in list"
-					:key="index"
-					class="item"
-				>
-				{{item.value}}
-				</view>
-				<view
-					v-for="(item, index) in list"
-					:key="index"
-					class="item"
-				>
-				{{item.value}}
-				</view>
-				<view
-					v-for="(item, index) in list"
-					:key="index"
-					class="item"
-				>
-				{{item.value}}
-				</view>
-				<view
-					v-for="(item, index) in list"
-					:key="index"
-					class="item"
-				>
-				{{item.value}}
-				</view>
-				<view
-					v-for="(item, index) in list"
-					:key="index"
-					class="item"
-				>
-				{{item.value}}
-				</view>
+				<slot></slot>
 			</scroll-view>
 		</view>
 	</view>
@@ -90,12 +21,6 @@
 			title: {
 				type: String,
 				default: ''
-			},
-			list: {
-				type: Array,
-				default() {
-					return []
-				}
 			}
 		},
 		methods:{
@@ -116,11 +41,16 @@
 		z-index: 999;
 		background-color: #ffffff;
 		height: 0;
+		overflow: hidden;
 		transition: all ease-in-out .3s; 
 	}
 	.show {
 		min-height: 400rpx;
-		max-height: 600rpx;
+		max-height: 800rpx;
+	}
+	.prop-list {
+		min-height: 350rpx;
+		max-height: 750rpx;
 	}
 	.mask {
 		position: fixed;

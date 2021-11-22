@@ -1,6 +1,9 @@
 <template>
 	<view class="card">
-		<view v-if="hasPet" class="card-content">
+		<view 
+			v-if="hasPet" 
+			class="card-content"
+		>
 			<view class="left">
 				<image :src="petInfo.petAvatar" mode="" class="image"></image>
 			</view>
@@ -169,5 +172,6 @@
 		position: absolute;
 		top: 20rpx;
 		right: 20rpx;
+		font-size: 24rpx;
 	}
 </style>
