@@ -53,11 +53,12 @@
                return this.getDate('end');
            }
        },
-	   mounted() {
-		   console.log(5555555, this.defaultDate);
-		   if(this.defaultDate) {
-			   this.date = this.defaultDate;
+	   watch:{
+		   defaultDate(newVal) {
+			   newVal && (this.date = newVal);
 		   }
+	   },
+	   mounted() {
 		   this.$emit('change', {name: this.propName, value: this.date});
 	   },
        methods: {
