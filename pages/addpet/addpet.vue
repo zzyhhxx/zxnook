@@ -89,7 +89,7 @@
 				buttonStatus: 'usable',
 				
 				radioIndex: 0,
-				genderRatio: [{value: '1', name: 'GG'}, {value: '2', name: 'MM'},],
+				genderRatio: [{value: 1, name: 'GG'}, {value: 2, name: 'MM'},],
 				
 				typeIndex: 0,
 				typeList: [],
@@ -102,8 +102,9 @@
 				breedList: [],
 				
 				sterilisationIndex: 0,
-				sterilisationList: [{value: '1', name: '未绝育'}, {value: '2', name: '已绝育'},],
+				sterilisationList: [{value: 1, name: '未绝育'}, {value: 2, name: '已绝育'}],
 				
+				petId: '',
 				petAvatar: '',
 				petName: '',
 				petGender: '',
@@ -126,8 +127,8 @@
 			await this.init();
 			if(isEdit === '1' && data) {
 				let petData = JSON.parse(data);
-				console.log(11111, petData);
 				if(Object.keys(petData).length) {
+					this.petId = petData.petId;
 					this.petAvatar = petData.petAvatar;
 					this.petName = petData.petName;
 					this.birthday = timeFormat('yyyy-MM-dd', new Date(petData.petBirthday * 1000));
@@ -139,15 +140,7 @@
 					this.setValue(this.allBreedList.dog, petData, 'petBreed', 'breedIndex');
 				}
 			}
-			
-			let typeList = JSON.parse(JSON.stringify(this.typeList));
-			let allBreedList = JSON.parse(JSON.stringify(this.allBreedList));
-			this.petType = typeList[this.typeIndex].value;
-			this.breedList = this.petType === CONFIG.PETTYPE.CAT 
-								? allBreedList.cat
-								: this.petType === CONFIG.PETTYPE.DOG
-								? allBreedList.dog
-								: [];
+			this.setConfigs();
 			let breedList = JSON.parse(JSON.stringify(this.breedList));
 			this.petBreed = breedList[this.breedIndex].value;
 			this.isSterilisation = this.sterilisationList[this.sterilisationIndex].value;
@@ -163,6 +156,14 @@
 				return this.breedList.map(item => {
 					return item.name;
 				})
+			}
+		},
+		watch:{
+			typeIndex(newVal, oldVal) {
+				if(newVal !== oldVal) {
+					this.setConfigs();
+					this.breedIndex = 0;
+				}
 			}
 		},
 		methods: {
@@ -208,14 +209,17 @@
 					$toast('宠物名不能为空');
 				}
 				let data = {
-					pet_avatar: this.petAvatar,
-					pet_name: this.petName,
-					pet_gender: this.petGender,
-					pet_type: this.petType,
-					pet_breed: this.petBreed,
-					pet_birthday: this.birthday,
-					pet_homday: this.homeDay,
-					is_sterilisation: this.isSterilisation
+					petAvatar: this.petAvatar,
+					petName: this.petName,
+					petGender: this.petGender,
+					petType: this.petType,
+					petBreed: this.petBreed,
+					petBirthday: this.birthday,
+					petHomday: this.homeDay,
+					isSterilisation: this.isSterilisation
+				}
+				if(this.petId) {
+					data.petId = this.petId;
 				}
 				return data;
 			},
@@ -230,7 +234,7 @@
 				.then(res => {
 					let { code, msg, data } = res || {};
 					if(code === 1) {
-						$toast('添加成功').then(() => {
+						$toast('保存成功').then(() => {
 							uni.navigateBack({
 								delta: 1
 							});
@@ -249,6 +253,16 @@
 						this[thisPropName] = index;
 					}
 				})
+			},
+			setConfigs() {
+				let typeList = JSON.parse(JSON.stringify(this.typeList));
+				let allBreedList = JSON.parse(JSON.stringify(this.allBreedList));
+				this.petType = typeList[this.typeIndex].value;
+				this.breedList = this.petType === CONFIG.PETTYPE.CAT
+									? allBreedList.cat
+									: this.petType === CONFIG.PETTYPE.DOG
+									? allBreedList.dog
+									: [];
 			}
 		}
 	}

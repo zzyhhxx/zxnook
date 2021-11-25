@@ -7,7 +7,7 @@
 				v-for="(item, index) in list" 
 				:key="index"
 				@click="tabClick(index)"
-				>{{item.text}}</view>
+				>{{item.name}}</view>
 		</view>
 	</scroll-view>
 </template>
@@ -19,12 +19,7 @@
 			list: {
 				type: Array,
 				default() {
-					return [
-						{text: '推荐'},
-						{text: '关注'},
-						{text: '问答'},
-						{text: '宠物课堂'},
-					]
+					return []
 				}
 			},
 			currentIndex: {

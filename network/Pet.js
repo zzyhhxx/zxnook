@@ -10,12 +10,6 @@ export function addPet(data) {
 		data
 	})
 }
-export function editPet(data) {
-	return request({
-		url: '/index.php?s=/api/pet/editPet',
-		data
-	})
-}
 export function changePet(data) {
 	return request({
 		url: '/index.php?s=/api/pet/changePet',
