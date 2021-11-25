@@ -6,7 +6,13 @@
 		<view class="uni-list">
 			<view class="uni-list-cell">
 				<view class="uni-list-cell-db">
-					<picker mode="date" :value="date" :start="startDate" :end="endDate" @change="bindDateChange">
+					<picker 
+						mode="date" 
+						:value="date" 
+						:start="startDate" 
+						:end="endDate" 
+						@change="bindDateChange"
+					>
 						<view class="uni-input">{{date}}</view>
 					</picker>
 				</view>
@@ -23,6 +29,10 @@
 			   default: ''
 		   },
 		   propName: {
+			   type: String,
+			   default: ''
+		   },
+		   defaultDate: {
 			   type: String,
 			   default: ''
 		   }
@@ -44,12 +54,16 @@
            }
        },
 	   mounted() {
+		   console.log(5555555, this.defaultDate);
+		   if(this.defaultDate) {
+			   this.date = this.defaultDate;
+		   }
 		   this.$emit('change', {name: this.propName, value: this.date});
 	   },
        methods: {
            bindDateChange: function(e) {
                this.date = e.target.value;
-			   this.$emit('change', {name: this.propName, value: newVal});
+			   this.$emit('change', {name: this.propName, value: this.date});
            },
            getDate(type) {
                const date = new Date();

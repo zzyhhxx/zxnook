@@ -3,7 +3,13 @@
 		<view class="item">
 			<view class="label">{{label}}</view>
 			<view class="desc">
-				<input :type="type" value="" :placeholder="placeholder" class="input" v-model="inputValue"/>
+				<input 
+					:type="type" 
+					:value="thisValue" 
+					:placeholder="placeholder" 
+					class="input" 
+					@input="inputValue"
+				/>
 			</view>
 		</view>
 	</view>
@@ -29,19 +35,25 @@
 				type: String,
 				default: ''
 			},
-			defaultVaule: {
-				type: String,
+			defaultValue: {
+				type: [String, Number],
 				default: ''
 			}
 		},
 		data() {
 			return {
-				inputValue: ''
+				value: ''
 			}
 		},
-		watch:{
-			inputValue(newVal) {
-				this.$emit('change', {name: this.propName, value: newVal});
+		computed:{
+			thisValue() {
+				return this.value || this.defaultValue;
+			}
+		},
+		methods:{
+			inputValue(e) {
+				this.value = e.target.value;
+				this.$emit('change', {name: this.propName, value: this.value});
 			}
 		}
 	}

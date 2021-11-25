@@ -16,13 +16,22 @@ export function editPet(data) {
 		data
 	})
 }
-export function getType() {
+export function changePet(data) {
+	return request({
+		url: '/index.php?s=/api/pet/changePet',
+		data
+	})
+}
+export function getType(data) {
 	return request({
 		url: '/index.php?s=/api/pet/getType',
 		data
 	})
 }
-export function getBreed() {
+export function getBreed(data) {
+	/**
+	 * type: cat || dog
+	 */
 	return request({
 		url: '/index.php?s=/api/pet/getBreed',
 		data

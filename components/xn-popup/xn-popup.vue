@@ -2,9 +2,19 @@
 	<view>
 		<view v-if="isShow" class="mask" @click="maskClick()" @touchmove.prevent></view>
 		<view class="propup" :class="{show: isShow}" @touchmove.prevent>
-			<view class="prop-title">{{title}}</view>
+			<view class="prop-title">
+				<view class="item-left">
+					<slot name="titleLeft"></slot>
+				</view>
+				<view class="item-center">
+					<slot name="titleCenter"></slot>
+				</view>
+				<view class="item-right">
+					<slot name="titleRight"></slot>
+				</view>
+			</view>
 			<scroll-view class="prop-list" scroll-y="true">
-				<slot></slot>
+				<slot name="list"></slot>
 			</scroll-view>
 		</view>
 	</view>
@@ -17,10 +27,6 @@
 			isShow: {
 				type: Boolean,
 				default: false
-			},
-			title: {
-				type: String,
-				default: ''
 			}
 		},
 		methods:{
@@ -45,12 +51,10 @@
 		transition: all ease-in-out .3s; 
 	}
 	.show {
-		min-height: 400rpx;
-		max-height: 800rpx;
+		height: 800rpx;
 	}
 	.prop-list {
-		min-height: 350rpx;
-		max-height: 750rpx;
+		height: 700rpx;
 	}
 	.mask {
 		position: fixed;
@@ -64,8 +68,36 @@
 	}
 	.prop-title {
 		width: 100%;
-		height: 50rpx;
-		line-height: 50rpx;
+		height: 100rpx;
+		line-height: 100rpx;
 		text-align: center;
+		position: relative;
+		display: flex;
+		justify-content: space-between;
+		padding: 0 20rpx;
+		overflow: hidden;
+	}
+	.prop-title::after {
+		position: absolute;
+		content: '';
+		width: 200%;
+		height: 1px;
+		left: 0;
+		bottom: 0;
+		background: #E6E6E6;
+		transform: scale(0.5);
+		transform-origin: 0 0;
+	}
+	.item-left {
+		width: 20%;
+		position: relative;
+	}
+	.item-center {
+		flex: 1;
+		position: relative;
+	}
+	.item-right {
+		width: 20%;
+		position: relative;
 	}
 </style>

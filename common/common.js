@@ -51,8 +51,8 @@ export function getTimeText(timestamp) {
 	let second = timestamp % 60;
 	let hour = Math.floor(timestamp / 3600) % 24;
 	let minute = Math.floor((timestamp % 3600) / 60);
-	let day = Math.floor(timestamp / 86400);
-	let month = Math.floor(day / 30);
+	let day = Math.floor(timestamp / 86400) % 30;
+	let month = Math.floor(timestamp / 86400 / 30);
 	let year = Math.floor(month / 12);
 	return {second, minute, hour, day, month, year};
 }

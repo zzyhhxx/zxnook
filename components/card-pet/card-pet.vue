@@ -5,13 +5,21 @@
 			class="card-content"
 		>
 			<view class="left">
-				<image :src="petInfo.petAvatar" mode="" class="image"></image>
+				<image 
+					:src="petInfo.petAvatar" 
+					mode="" 
+					class="image"
+				></image>
 			</view>
 			<view class="right">
 				<view class="pet-name">{{petInfo.petName}}</view>
 				<view class="pet-info">
 					<view class="icon">
-						<image src="../../static/pet.png" mode="" class="image"></image>
+						<image 
+							src="../../static/pet.png" 
+							mode="" 
+							class="image"
+						></image>
 					</view>
 					<view class="info-name">性别：</view>
 					<view class="info-desc">{{gender}}</view>

@@ -1,37 +1,79 @@
 <template>
-	<view class="content" v-if="isReady">
+	<view
+		v-if="isReady"
+		class="content" 
+	>
 		<card-pet
 			:petInfo="petInfo"
 			@changePet="onChangePet"
 		></card-pet>
 		<tab-control 
 			ref="tabcontrol"
-			:currentIndex="currentIndex" 
+			:currentIndex="tabCurrentIndex" 
 			@tabClick="onTabClick" 
 		></tab-control>
 		<tab-control 
 			v-if="showFixTabControl"
 			class="fixed"
-			:currentIndex="currentIndex" 
+			:currentIndex="tabCurrentIndex" 
 			@tabClick="onTabClick" 
 		></tab-control>
 		<xn-popup 
 			:isShow="showPetList"
-			title="切换宠物"
-			@maskClick="onMaskClick"
-		>
-			<view 
-				v-for="item in 100" 
-				:key="item"
-				class="pet-item"
-			>
-				<view class="pet-item-icon">
-					<image src="../../static/image/icon/edit.svg" mode="" class="icon-image"></image>
+			@maskClick="closePetList"
+		>	
+			<template v-slot:titleLeft>
+				<view 
+					class="new-add" 
+					@click="addNewPet()"
+				>
+					<view class="icon-new-add">
+						<image 
+							src="../../static/image/icon/add.svg"
+							class="new-add-img" 
+						></image>
+					</view>
+					<text>添加</text>
 				</view>
-				<view class="pet-item-name" :class="{active: item === 1}">
-					{{'宠物'+ item}}
+			</template>
+			<template v-slot:titleCenter>
+				<view class="title">
+					切换宠物
 				</view>
-			</view>
+			</template>
+			<template v-slot:titleRight>
+				<image 
+					src="../../static/image/icon/close.svg" 
+					class="icon-close"
+					@click="closePetList()"
+				></image>
+			</template>
+			<template v-slot:list>
+				<view
+					v-for="(item, index) in petList" 
+					:key="index"
+					class="pet-item"
+				>
+						<view 
+							class="pet-item-icon"
+							@click="editPet(index)" 
+						>
+							<image 
+								src="../../static/image/icon/edit.svg" 
+								mode="" 
+								class="icon-image"
+							></image>
+						</view>
+						<view 
+							class="pet-item-name" 
+							:class="{active: index === petCurrentIndex}" 
+							@click="onChoosePet(index)"
+						>
+							{{item.petName}}
+						</view>
+				</view>
+			</template>
+			
 		</xn-popup>
 		<card-content
 			v-for="(item, index) in articleList"
@@ -42,18 +84,23 @@
 </template>
 
 <script>
-	import { getPet } from '../../network/Pet.js';
+	import { getPet, changePet } from '../../network/Pet.js';
 	import { getArticleList } from '../../network/Article.js';
 	export default {
 		data() {
 			return {
 				isReady: true,
-				currentIndex: 0,
+				
 				showFixTabControl: false,
-				petInfo:{},
 				tabList:[],
-				contentList:[],
+				tabCurrentIndex: 0,
+				
 				showPetList: false,
+				petList:[],
+				petCurrentIndex: 0,
+				
+				petInfo:{},
+				contentList:[],
 				articleList:[]
 			}
 		},
@@ -66,7 +113,14 @@
 				let {code, msg, data} = result[0] || {};
 				if(code === 1) {
 					if(Array.isArray(data) && data.length) {
-						this.petInfo = data[data.length - 1];
+						data.forEach((item, index) => {
+							if(item.isShow === 20) {
+								console.log(item, index);
+								this.petInfo = item;
+								this.petCurrentIndex = index;
+							}
+						})
+						this.petList = data;
 					}
 				}
 				let articleData = result[1] ? result[1].data : {};
@@ -75,7 +129,7 @@
 				}
 			},
 			onTabClick(e) {
-				this.currentIndex = e;
+				this.tabCurrentIndex = e;
 			},
 			onPageScroll(e) {
 				let tabControlTop = this.$refs.tabcontrol.$el.offsetTop;
@@ -87,8 +141,37 @@
 			onChangePet() {
 				this.showPetList = !this.showPetList;
 			},
-			onMaskClick() {
+			onChoosePet(index) {
+				this.petCurrentIndex = index;
+				this.petInfo = this.petList[index];
+				changePet({petId: this.petInfo.petId});
+				this.closePetList();
+			},
+			closePetList() {
 				this.showPetList = false;
+			},
+			addNewPet() {
+				this.closePetList();
+				uni.navigateTo({
+					url: '/pages/addpet/addpet',
+					fail: () => {
+						uni.redirectTo({
+							url: '/pages/addpet/addpet'
+						});
+					},
+				});
+			},
+			editPet(index) {
+				this.closePetList();
+				const url = `/pages/addpet/addpet?isEdit=1&data=${JSON.stringify(this.petList[index])}`;
+				uni.navigateTo({
+					url,
+					fail: () => {
+						uni.redirectTo({
+							url
+						});
+					},
+				});
 			}
 		}
 	}
@@ -105,7 +188,6 @@
 	}
 	.title {
 		font-size: 36rpx;
-		color: #8f8f94;
 	}
 	.fixed {
 		position: fixed;
@@ -138,9 +220,36 @@
 	}
 	.pet-item-name {
 		flex: 1;
-		margin-left: 20rpx;
+		margin-left: 40rpx;
 	}
 	.pet-item-name.active {
-		background-color: #FFF4F4;
+		color: var(--color-high-text);
+	}
+	.new-add {
+		display: flex;
+		line-height: 100rpx;
+		font-size: 24rpx;
+	}
+	.new-add-img {
+		width: 48rpx;
+		height: 48rpx;
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+	.icon-new-add {
+		width: 48rpx;
+		height: 48rpx;
+		align-self: center;
+		position: relative;
+		margin-right: 10rpx;
+	}
+	.icon-close {
+		width: 48rpx;
+		height: 48rpx;
+		position: absolute;
+		right: 0;
+		top: 50%;
+		transform: translateY(-50%);
 	}
 </style>
