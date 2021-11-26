@@ -7,7 +7,7 @@
 			ref="tabcontrol"
 			:currentIndex="currentIndex" 
 			:list="tabList"
-			@tabClick="onTabClick" 
+			@tabClick="onTabClick"  
 		></tab-control>
 		<tab-control 
 			v-if="showFixTabControl"
@@ -37,6 +37,13 @@
 				isReady: true,
 				currentIndex: 0,
 				showFixTabControl: false,
+				tabList:[],
+				currentIndex: 0,
+				
+				showPetList: false,
+				petList:[],
+				petCurrentIndex: 0,
+				
 				petInfo:{},
 				tabList:[],
 				contentList:[],
@@ -69,6 +76,7 @@
 				if(code === 1) {
 					if(Array.isArray(data) && data.length) {
 						this.petInfo = data[data.length - 1];
+						this.petList = data;
 					}
 				}else {
 					$toast(msg);
@@ -83,6 +91,41 @@
 				if(this.showFixTabControl !== showFixTabControl) {
 					this.showFixTabControl = showFixTabControl;
 				}
+			},
+			onChangePet() {
+				this.showPetList = !this.showPetList;
+			},
+			onChoosePet(index) {
+				this.petCurrentIndex = index;
+				this.petInfo = this.petList[index];
+				changePet({petId: this.petInfo.petId});
+				this.closePetList();
+			},
+			closePetList() {
+				this.showPetList = false;
+			},
+			addNewPet() {
+				this.closePetList();
+				uni.navigateTo({
+					url: '/pages/addpet/addpet',
+					fail: () => {
+						uni.redirectTo({
+							url: '/pages/addpet/addpet'
+						});
+					},
+				});
+			},
+			editPet(index) {
+				this.closePetList();
+				const url = `/pages/addpet/addpet?isEdit=1&data=${JSON.stringify(this.petList[index])}`;
+				uni.navigateTo({
+					url,
+					fail: () => {
+						uni.redirectTo({
+							url
+						});
+					},
+				});
 			},
 			getArticleList() {
 				let tabList = JSON.parse(JSON.stringify(this.tabList));
