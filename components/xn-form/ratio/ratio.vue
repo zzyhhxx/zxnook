@@ -10,7 +10,7 @@
 					@click="btnClick(index)"
 				>
 					<view>
-						<radio :value="item.value" :checked="index === currentIndex" />
+						<radio :value="item.value | toString" :checked="index === currentIndex" />
 					</view>
 					<view>{{item.name}}</view>
 				</view>
@@ -47,6 +47,11 @@
 		methods: {
 			btnClick(index) {
 				this.$emit('btnClick', {name: this.propName, value: index});
+			}
+		},
+		filters:{
+			toString(value) {
+				return String(value);
 			}
 		}
 	}

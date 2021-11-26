@@ -96,7 +96,7 @@
 				
 				showFixTabControl: false,
 				tabList:[],
-				tabCurrentIndex: 0,
+				currentIndex: 0,
 				
 				showPetList: false,
 				petList:[],
@@ -133,13 +133,14 @@
 				if(code === 1) {
 					if(Array.isArray(data) && data.length) {
 						this.petInfo = data[data.length - 1];
+						this.petList = data;
 					}
 				}else {
 					$toast(msg);
 				}
 			},
 			onTabClick(e) {
-				this.tabCurrentIndex = e;
+				this.currentIndex = e;
 			},
 			onPageScroll(e) {
 				let tabControlTop = this.$refs.tabcontrol.$el.offsetTop;
