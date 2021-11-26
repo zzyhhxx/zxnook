@@ -9,13 +9,15 @@
 		></card-pet>
 		<tab-control 
 			ref="tabcontrol"
-			:currentIndex="tabCurrentIndex" 
-			@tabClick="onTabClick" 
+			:currentIndex="currentIndex" 
+			:list="tabList"
+			@tabClick="onTabClick"  
 		></tab-control>
 		<tab-control 
 			v-if="showFixTabControl"
 			class="fixed"
-			:currentIndex="tabCurrentIndex" 
+			:currentIndex="currentIndex"
+			:list="tabList"
 			@tabClick="onTabClick" 
 		></tab-control>
 		<xn-popup 
@@ -84,7 +86,8 @@
 </template>
 
 <script>
-	import { getPet, changePet } from '../../network/Pet.js';
+	import { getPet } from '../../network/Pet.js';
+	import { getTabList } from '../../network/Home.js';
 	import { getArticleList } from '../../network/Article.js';
 	export default {
 		data() {
@@ -104,28 +107,35 @@
 				articleList:[]
 			}
 		},
-		onLoad() {
+		async onLoad() {
+			let result = await getTabList();
+			let tabData = result ? result.data.list.data : [];
+			tabData.forEach((item, index) => {
+				this.tabList.push({
+					name: item.articleTitle, 
+					value: item.articleContent.replace(/[^0-9]/ig,'')
+				});
+			})
+			this.getArticleList();
+		},
+		onShow() {
 			this.init();
+		},
+		watch: {
+			currentIndex() {
+				this.getArticleList();
+			}
 		},
 		methods: {
 			async init() {
-				let result = await Promise.all([getPet(),getArticleList()]);
+				let result = await Promise.all([getPet()]);
 				let {code, msg, data} = result[0] || {};
 				if(code === 1) {
 					if(Array.isArray(data) && data.length) {
-						data.forEach((item, index) => {
-							if(item.isShow === 20) {
-								console.log(item, index);
-								this.petInfo = item;
-								this.petCurrentIndex = index;
-							}
-						})
-						this.petList = data;
+						this.petInfo = data[data.length - 1];
 					}
-				}
-				let articleData = result[1] ? result[1].data : {};
-				if(articleData.list && articleData.list.data) {
-					this.articleList = articleData.list.data;
+				}else {
+					$toast(msg);
 				}
 			},
 			onTabClick(e) {
@@ -172,6 +182,19 @@
 						});
 					},
 				});
+			},
+			getArticleList() {
+				let tabList = JSON.parse(JSON.stringify(this.tabList));
+				tabList.length && getArticleList({
+					categoryId: tabList[this.currentIndex].value
+				}).then(res => {
+					let {code, data, msg} = res || {};
+					if(code === 1) {
+						this.articleList = data.list.data;
+					}else {
+						$toast(msg);
+					}
+				})
 			}
 		}
 	}
