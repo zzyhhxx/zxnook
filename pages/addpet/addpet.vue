@@ -102,7 +102,7 @@
 				breedList: [],
 				
 				sterilisationIndex: 0,
-				sterilisationList: [{value: 1, name: '未绝育'}, {value: 2, name: '已绝育'}],
+				sterilisationList: [{value: 1, name: '未绝育'}, {value: 2, name: '已绝育'},],
 				
 				petId: '',
 				petAvatar: '',
@@ -140,6 +140,7 @@
 					this.setValue(this.allBreedList.dog, petData, 'petBreed', 'breedIndex');
 				}
 			}
+			
 			this.setConfigs();
 			let breedList = JSON.parse(JSON.stringify(this.breedList));
 			this.petBreed = breedList[this.breedIndex].value;
@@ -159,11 +160,9 @@
 			}
 		},
 		watch:{
-			typeIndex(newVal, oldVal) {
-				if(newVal !== oldVal) {
-					this.setConfigs();
-					this.breedIndex = 0;
-				}
+			typeIndex() {
+				this.setConfigs();
+				this.breedIndex = 0;
 			}
 		},
 		methods: {
@@ -258,7 +257,7 @@
 				let typeList = JSON.parse(JSON.stringify(this.typeList));
 				let allBreedList = JSON.parse(JSON.stringify(this.allBreedList));
 				this.petType = typeList[this.typeIndex].value;
-				this.breedList = this.petType === CONFIG.PETTYPE.CAT
+				this.breedList = this.petType === CONFIG.PETTYPE.CAT 
 									? allBreedList.cat
 									: this.petType === CONFIG.PETTYPE.DOG
 									? allBreedList.dog
