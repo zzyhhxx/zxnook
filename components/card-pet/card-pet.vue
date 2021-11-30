@@ -48,7 +48,7 @@
 </template>
 
 <script>
-	import {getTimeText, timeFormat} from '../../common/common.js';
+	import {getAge} from '../../common/common.js';
 	export default {
 		name:"card-pet",
 		props: {
@@ -76,20 +76,7 @@
 					: ''
 			},
 			age() {
-				let timestamp = Math.floor(new Date().getTime()/1000 - this.petInfo.petBirthday);
-				let {year, month, day} = getTimeText(timestamp);
-				if(year >= 1) {
-					return `${year}岁${month}个月`;
-				}
-				else if(month >= 1) {
-					return `${month}个月${day}天`;
-				}
-				else if(day > 1) {
-					return `${day}天`;
-				}
-				else {
-					return `0天`;
-				}
+				return getAge(this.petInfo.petBirthday);
 			}
 		},
 		methods:{

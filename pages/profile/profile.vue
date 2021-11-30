@@ -1,11 +1,22 @@
 <template>
 	<view class="content">
 		<view class="top-image">
-			<navigator v-if="Object.keys(userInfo).length" url="../profile-setlist/profile-setlist">
-				<image :src="userInfo.avatarUrl || '../../static/image/default/default-avatar.jpg'" mode="" class="image"></image>
+			<navigator 
+				v-if="Object.keys(userInfo).length" 
+				url="../profile-setlist/profile-setlist"
+			>
+				<image 
+					:src="userInfo.avatarUrl || '../../static/image/default/default-avatar.jpg'" 
+					mode="" 
+					class="image"
+				></image>
 			</navigator>
 			<view v-else>
-				<image src="../../static/image/default/default-avatar.jpg" mode="" class="image"></image>
+				<image 
+					src="../../static/image/default/default-avatar.jpg" 
+					mode="" 
+					class="image"
+				></image>
 			</view>
 		</view>
 		<view class="user-name">
@@ -21,46 +32,45 @@
 			<view class="list-item active">
 				<text class="item">我的宠物</text>
 			</view>
-			<view class="list-item">
-				<text class="item">动态</text>
-			</view>
-			<view class="list-item">
-				<text class="item">消息</text>
-			</view>
 		</view>
 		<view class="content-list">
-			<card-smallpic></card-smallpic>
-			<card-smallpic></card-smallpic>
+			<card-smallpic
+				v-for="(item, index) in petList"
+				:key="index"
+				:info="item"
+				:breeds="petBreed"
+			></card-smallpic>
 		</view>
 	</view>
 </template>
 
 <script>
 	import { getUser } from '../../network/Profile.js';
-	import { $toast } from '../../common/common.js';
+	import { getPet, getBreed } from '../../network/Pet.js';
 	export default {
 		data() {
 			return {
-				userInfo: {}
+				userInfo: {},
+				petList: [],
+				petBreed: []
 			}
 		},
-		mounted() {
-			this.init();
+		async onLoad() {
+			let result = await getBreed();
+			if(result) {
+				this.petBreed.push(...result.data.list.cat.data);
+				this.petBreed.push(...result.data.list.dog.data);
+			}
+			console.log(111111, this.petBreed)
 		},
 		onShow() {
 			this.init();
 		},
 		methods: {
-			init() {
-				getUser()
-				.then(res => {
-					let {code, msg, data = {}} = res || {};
-					 if(code !== 1) {
-						 $toast(msg);
-					 }else {
-						 this.userInfo = data.userInfo || {};
-					 }
-				})
+			async init() {
+				let result = await Promise.all([getUser(), getPet()]);
+				this.userInfo = result[0] ? result[0].data.userInfo : {};
+				this.petList = result[1] ? result[1].data : [];
 			}
 		}
 	}

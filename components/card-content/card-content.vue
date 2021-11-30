@@ -1,5 +1,8 @@
 <template>
-	<view class="card">
+	<view 
+		class="card"
+		@click="onClick()"
+	>
 		<view class="left">
 			<image :src="info.image.filePath" class="left-image"></image>
 		</view>
@@ -29,10 +32,10 @@
 				}
 			}
 		},
-		data() {
-			return {
-				
-			};
+		methods: {
+			onClick() {
+				this.$emit('articleClick', this.info.articleId);
+			}
 		}
 	}
 </script>

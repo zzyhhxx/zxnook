@@ -56,6 +56,22 @@ export function getTimeText(timestamp) {
 	let year = Math.floor(month / 12);
 	return {second, minute, hour, day, month, year};
 }
+export function getAge(birthday) {
+	let timestamp = Math.floor(new Date().getTime()/1000 - birthday);
+	let {year, month, day} = getTimeText(timestamp);
+	if(year >= 1) {
+		return `${year}岁${month}个月`;
+	}
+	else if(month >= 1) {
+		return `${month}个月${day}天`;
+	}
+	else if(day > 1) {
+		return `${day}天`;
+	}
+	else {
+		return `0天`;
+	}
+}
 //'yyyy-MM-dd hh:mm:ss', new Date(timestamp * 1000)
 export function timeFormat(format, d) {
     	if(d == null) {

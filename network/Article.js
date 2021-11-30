@@ -5,3 +5,9 @@ export function getArticleList(data) {
 		data
 	})
 }
+export function getArticle(data) {
+	return request({
+		url: '/index.php?s=/api/article/detail',
+		data
+	})
+}

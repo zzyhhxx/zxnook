@@ -81,14 +81,16 @@
 			v-for="(item, index) in articleList"
 			:key="index"
 			:info="item"
+			@articleClick="onArticleClick"
 		></card-content>
 	</view>
 </template>
 
 <script>
-	import { getPet } from '../../network/Pet.js';
+	import { getPet, changePet } from '../../network/Pet.js';
 	import { getTabList } from '../../network/Home.js';
 	import { getArticleList } from '../../network/Article.js';
+	import { $toast } from '../../common/common';
 	export default {
 		data() {
 			return {
@@ -110,7 +112,7 @@
 		async onLoad() {
 			let result = await getTabList();
 			let tabData = result ? result.data.list.data : [];
-			tabData.forEach((item, index) => {
+			tabData.forEach(item => {
 				this.tabList.push({
 					name: item.articleTitle, 
 					value: item.articleContent.replace(/[^0-9]/ig,'')
@@ -196,6 +198,17 @@
 						$toast(msg);
 					}
 				})
+			},
+			onArticleClick(id) {
+				let url = `/pages/articledetail/articledetail?articleId=${id}`;
+				uni.navigateTo({
+					url,
+					fail: () => {
+						uni.redirectTo({
+							url
+						});
+					},
+				});
 			}
 		}
 	}

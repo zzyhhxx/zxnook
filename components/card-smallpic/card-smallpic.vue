@@ -1,32 +1,56 @@
 <template>
 	<view class="card">
 		<view class="top-image">
-			<image src="../../static/image/dog4.png" mode="" class="image"></image>
+			<image :src="info.petAvatar" mode="" class="image"></image>
 		</view>
 		<view class="pet-info">
 			<view class="item">
 				<view class="item-name">名字: </view>
-				<view class="item-desc">噼噼啪啪</view>
+				<view class="item-desc">{{info.petName}}</view>
 			</view>
 			<view class="item">
 				<view class="item-name">年龄: </view>
-				<view class="item-desc">2</view>
+				<view class="item-desc">{{age}}</view>
 			</view>
 			<view class="item">
 				<view class="item-name">品种: </view>
-				<view class="item-desc">阿拉斯加</view>
+				<view class="item-desc">{{breed}}</view>
 			</view>
 		</view>
 	</view>
 </template>
 
 <script>
+	import { getAge } from '../../common/common';
 	export default {
-		name:"card-smallpic",
-		data() {
-			return {
-				
-			};
+		name:"CardSmallpic",
+		props: {
+			info: {
+				type: Object,
+				default() {
+					return {};
+				}
+			},
+			breeds: {
+				type: Array,
+				default() {
+					return [];
+				}
+			}
+		},
+		computed: {
+			age() {
+				return getAge(this.info.petBirthday);
+			},
+			breed() {
+				let breed = '';
+				this.breeds.forEach(item => {
+					if(item.articleId === this.info.petBreed) {
+						breed = item.articleTitle; 
+					}
+				})
+				return breed;
+			}
 		}
 	}
 </script>

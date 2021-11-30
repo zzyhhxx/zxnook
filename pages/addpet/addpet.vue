@@ -89,7 +89,10 @@
 				buttonStatus: 'usable',
 				
 				radioIndex: 0,
-				genderRatio: [{value: 1, name: 'GG'}, {value: 2, name: 'MM'},],
+				genderRatio: [
+					{value: 1, name: 'GG'}, 
+					{value: 2, name: 'MM'}
+					],
 				
 				typeIndex: 0,
 				typeList: [],
@@ -102,7 +105,10 @@
 				breedList: [],
 				
 				sterilisationIndex: 0,
-				sterilisationList: [{value: 1, name: '未绝育'}, {value: 2, name: '已绝育'},],
+				sterilisationList: [
+					{value: 1, name: '未绝育'}, 
+					{value: 2, name: '已绝育'}
+					],
 				
 				petAvatar: '',
 				petName: '',
@@ -231,9 +237,9 @@
 				this.buttonStatus = 'unusable';
 				addPet({petData: data})
 				.then(res => {
-					let { code, msg, data } = res || {};
+					let { code, msg } = res || {};
 					if(code === 1) {
-						$toast('添加成功').then(() => {
+						$toast('保存成功').then(() => {
 							uni.navigateBack({
 								delta: 1
 							});

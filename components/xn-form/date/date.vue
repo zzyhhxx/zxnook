@@ -45,6 +45,11 @@
                date: currentDate
            }
        },
+	   watch: {
+		   defaultDate(newVal) {
+			   this.date !== newVal && (this.date = newVal);
+		   }
+	   },
        computed: {
            startDate() {
                return this.getDate('start');
@@ -54,10 +59,6 @@
            }
        },
 	   mounted() {
-		   console.log(5555555, this.defaultDate);
-		   if(this.defaultDate) {
-			   this.date = this.defaultDate;
-		   }
 		   this.$emit('change', {name: this.propName, value: this.date});
 	   },
        methods: {
