@@ -2,7 +2,6 @@ import { getCache } from '../common/cache.js';
 import { CONFIG } from '../common/config.js';
 import serialize from '../common/serialize.js';
 export function request({url = '', data = {}, useSerialize = true}) {
-	console.log()
 	if(useSerialize) {
 		data = serialize.hyphenateCopy(data);
 	}

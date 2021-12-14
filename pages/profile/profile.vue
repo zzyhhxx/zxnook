@@ -12,11 +12,15 @@
 				></image>
 			</navigator>
 			<view v-else>
-				<image 
-					src="../../static/image/default/default-avatar.jpg" 
-					mode="" 
-					class="image"
-				></image>
+				<navigator
+					url="../login/login"
+				>
+					<image 
+						src="../../static/image/default/default-avatar.jpg" 
+						mode="" 
+						class="image"
+					></image>
+				</navigator>
 			</view>
 		</view>
 		<view class="user-name">
@@ -61,7 +65,6 @@
 				this.petBreed.push(...result.data.list.cat.data);
 				this.petBreed.push(...result.data.list.dog.data);
 			}
-			console.log(111111, this.petBreed)
 		},
 		onShow() {
 			this.init();
@@ -69,7 +72,7 @@
 		methods: {
 			async init() {
 				let result = await Promise.all([getUser(), getPet()]);
-				this.userInfo = result[0] ? result[0].data.userInfo : {};
+				this.userInfo = result[0] && result[0].data ? result[0].data.userInfo : {};
 				this.petList = result[1] ? result[1].data : [];
 			}
 		}

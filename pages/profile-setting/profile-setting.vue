@@ -43,7 +43,6 @@
 <script>
 	import XnInput from '../../components/xn-form/input/input-large.vue';
 	import { uploadFile, checkAndToast, $toast } from '../../common/common.js';
-	import { check } from '../../common/check.js';
 	import { getUser, editUser } from '../../network/Profile.js';
 	export default {
 		name: 'ProfileSetting',
@@ -125,9 +124,9 @@
 					let {code, msg, data} = res || {};
 					if(code === 1) {
 						$toast('修改成功').then(() => {
-							uni.navigateBack({
-								delta:1
-							})
+							uni.switchTab({
+								url: '/pages/profile/profile'
+							});
 						})
 					}else {
 						$toast('修改失败，请稍后再试')

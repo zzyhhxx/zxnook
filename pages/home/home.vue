@@ -134,11 +134,15 @@
 				let {code, msg, data} = result[0] || {};
 				if(code === 1) {
 					if(Array.isArray(data) && data.length) {
-						this.petInfo = data[data.length - 1];
+						this.petInfo = data.find(item => item.isShow === 20) || {};
+						this.petCurrentIndex = data.findIndex(item => item.isShow === 20);
 						this.petList = data;
 					}
 				}else {
-					$toast(msg);
+					$toast(msg).then(() => {
+						this.petInfo = {};
+						this.petList = [];
+					})
 				}
 			},
 			onTabClick(e) {
@@ -165,13 +169,14 @@
 			},
 			addNewPet() {
 				this.closePetList();
+				let url = '/pages/addpet/addpet';
 				uni.navigateTo({
-					url: '/pages/addpet/addpet',
+					url,
 					fail: () => {
 						uni.redirectTo({
-							url: '/pages/addpet/addpet'
+							url
 						});
-					},
+					}
 				});
 			},
 			editPet(index) {

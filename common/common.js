@@ -40,12 +40,13 @@ export function $toast(title) {
 				icon: 'none',
 			    duration: 1500
 			});
-		}
-		setTimeout(() => {
+			setTimeout(() => {
+				resolve('success')
+			}, 1500);
+		}else {
 			resolve('success')
-		}, 1500);
+		}
 	})
-	
 }
 export function getTimeText(timestamp) {
 	let second = timestamp % 60;
@@ -96,7 +97,7 @@ export function timeFormat(format, d) {
             }
         }
         return format;
-    }
+}
 
 function _uploadFile(files, result = []) {
 	if(!files.length) {

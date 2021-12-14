@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50">
+            <g id="组_34754" data-name="组 34754" transform="translate(-163.5 -741)">
+              <rect id="矩形_3582" data-name="矩形 3582" width="50" height="50" rx="17" transform="translate(163.5 741)" fill="#f68685"></rect>
+              <g id="Iconly_Bulk_Plus" data-name="Iconly/Bulk/Plus" transform="translate(176.5 754)">
+                <g id="Plus" transform="translate(2 2)">
+                  <path id="Path_34200" d="M14.667,0H5.333C1.929,0,0,1.929,0,5.333v9.333C0,18.062,1.92,20,5.333,20h9.333C18.071,20,20,18.062,20,14.667V5.333C20,1.929,18.071,0,14.667,0Z" fill="#fff" opacity="0.4"></path>
+                  <path id="Path_34201" d="M7.32,4.708H4.75V7.257a.75.75,0,0,1-1.5,0V4.708H.68a.75.75,0,0,1,0-1.494H3.242V.674a.758.758,0,0,1,1.507,0V3.214H7.32a.75.75,0,0,1,0,1.494Z" transform="translate(6 6)" fill="#fff"></path>
+                </g>
+              </g>
+            </g>
+          </svg>

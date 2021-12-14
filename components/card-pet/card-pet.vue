@@ -48,7 +48,8 @@
 </template>
 
 <script>
-	import {getAge} from '../../common/common.js';
+	import { getAge, $toast } from '../../common/common.js';
+	import { isLogin } from '../../common/user';
 	export default {
 		name:"card-pet",
 		props: {
@@ -81,14 +82,22 @@
 		},
 		methods:{
 			onClick() {
-				uni.navigateTo({
-					url: '/pages/addpet/addpet',
-					fail: () => {
-						uni.redirectTo({
-							url: '/pages/addpet/addpet'
-						});
-					},
-				});
+				let url = '/pages/addpet/addpet';
+				let msg = '';
+				if(!isLogin()) {
+					url = '/pages/login/login';
+					msg = '请先登录';
+				}
+				$toast(msg).then(() => {
+					uni.navigateTo({
+						url,
+						fail: () => {
+							uni.redirectTo({
+								url
+							});
+						},
+					});
+				})
 			},
 			changePet() {
 				this.$emit('changePet');

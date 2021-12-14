@@ -1,10 +1,10 @@
 <template>
 	<view class="card">
 		<view class="left">
-			<image src="../../static/image/head2.png" mode="" class="image"></image>
+			<image :src="image" mode="" class="image"></image>
 		</view>
 		<view class="right">
-			狗狗
+			{{text}}
 		</view>
 	</view>
 </template>
@@ -12,10 +12,15 @@
 <script>
 	export default {
 		name:"card-classify",
-		data() {
-			return {
-				
-			};
+		props: {
+			image: {
+				type: String,
+				default: ''
+			},
+			text: {
+				type: String,
+				default: ''
+			}
 		}
 	}
 </script>

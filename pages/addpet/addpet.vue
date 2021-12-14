@@ -132,7 +132,6 @@
 			await this.init();
 			if(isEdit === '1' && data) {
 				let petData = JSON.parse(data);
-				console.log(11111, petData);
 				if(Object.keys(petData).length) {
 					this.petId = petData.petId;
 					this.petAvatar = petData.petAvatar;
@@ -230,7 +229,6 @@
 			},
 			submit() {
 				let data = this.verification();
-				console.log(data);
 				if(!data) {
 					return;
 				}
@@ -240,8 +238,8 @@
 					let { code, msg } = res || {};
 					if(code === 1) {
 						$toast('保存成功').then(() => {
-							uni.navigateBack({
-								delta: 1
+							uni.switchTab({
+								url: '/pages/home/home'
 							});
 						})
 					}else {

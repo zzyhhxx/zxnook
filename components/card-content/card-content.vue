@@ -7,10 +7,15 @@
 			<image :src="info.image.filePath" class="left-image"></image>
 		</view>
 		<view class="right">
-			<view class="user-info">
-				<view class="user-text">
-					<view class="user-name">{{info.articleTitle}}</view>
-					<view class="pet-name">{{info.viewTime}}</view>
+			<view class="article-info">
+				<view class="article-text">
+					<view class="article-name">{{info.articleTitle}}</view>
+					<view class="article-content">{{content}}</view>
+					<view class="view">
+						<view class="icon-view"></view>
+						<view class="text">{{info.showViews}}</view>
+					</view>
+					<view class="article-time">{{info.viewTime}}</view>
 				</view>
 			</view>
 			<view class="gender">
@@ -31,6 +36,11 @@
 					return {}
 				}
 			}
+		},
+		computed: {
+			content() {
+				return this.info.articleContent.replace(/<[^>]+>/g,"").replace(/&nbsp;/ig,"").substring(0, 200);
+			}	
 		},
 		methods: {
 			onClick() {
@@ -62,23 +72,27 @@
 	}
 	.right {
 		margin-top: 20rpx;
+		flex: 1;
 	}
-	.user-info {
+	.article-info {
 		display: flex;
 	}
-	.user-head {
+	.article-head {
 		width: 60rpx;
 		height: 60rpx;
 		border-radius: 10rpx;
 		overflow: hidden;
 	}
-	.user-head .img {
+	.article-head .img {
 		width: 60rpx;
 		height: 60rpx;
 	}
-	.user-text {
+	.article-text {
 		font-size: 24rpx;
 		margin-left: 16rpx;
+		position: relative;
+		height: 158rpx;
+		width: 100%;
 	}
 	.gender, .address {
 		font-size: 16rpx;
@@ -106,5 +120,42 @@
 		height: 26rpx;
 		width: 24rpx;
 		
+	}
+	.article-content {
+		text-overflow: ellipsis;
+		display: -webkit-box;
+		-webkit-line-clamp: 2; 
+		-webkit-box-orient: vertical;
+		word-break: break-all;
+		overflow: hidden; 
+		margin-top: 10rpx;
+		line-height: 36rpx;
+	}
+	.article-time {
+		position: absolute;
+		bottom: 0;
+		right: 10rpx;
+	}
+	.article-name {
+		font-size: 14px;
+		color: #000;
+		font-weight: bold;
+	}
+	.icon-view {
+		width: 32rpx;
+		height: 32rpx;
+		background: url('../../static/image/icon/view.svg') no-repeat top left;
+		background-size: 100%;
+		align-self: center;
+	}
+	.view {
+		display: flex;
+		position: absolute;
+		bottom: 0;
+	}
+	.view .text {
+		font-size: 24rpx;
+		margin-left: 4rpx;
+		line-height: 32rpx;
 	}
 </style>
