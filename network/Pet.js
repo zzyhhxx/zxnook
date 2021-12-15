@@ -4,6 +4,9 @@ export function getPet() {
 		url: '/index.php?s=/api/pet/getPet'
 	})
 }
+export function getPetById() {
+	
+}
 export function addPet(data) {
 	return request({
 		url: '/index.php?s=/api/pet/addPet',

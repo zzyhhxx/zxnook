@@ -1,5 +1,8 @@
 <template>
-	<view class="card">
+	<view 
+		class="card"
+		@click="onClick()"
+	>
 		<view class="top-image">
 			<image :src="info.petAvatar" mode="" class="image"></image>
 		</view>
@@ -21,9 +24,9 @@
 </template>
 
 <script>
-	import { getAge } from '../../common/common';
+	import { getAge, navigateTo } from '../../common/common';
 	export default {
-		name:"CardSmallpic",
+		name:"CardSmallPic",
 		props: {
 			info: {
 				type: Object,
@@ -50,6 +53,11 @@
 					}
 				})
 				return breed;
+			}
+		},
+		methods: {
+			onClick() {
+				navigateTo(`/pages/petdetail/petdetail?petId=${this.info.petId}`)
 			}
 		}
 	}

@@ -99,6 +99,23 @@ export function timeFormat(format, d) {
         return format;
 }
 
+export function navigateTo(url) {
+	uni.navigateTo({
+		url,
+		fail: () => {
+			uni.redirectTo({
+				url
+			});
+		},
+	});
+}
+
+export function redirectTo(url) {
+	uni.redirectTo({
+		url
+	});
+}
+
 function _uploadFile(files, result = []) {
 	if(!files.length) {
 		return result;

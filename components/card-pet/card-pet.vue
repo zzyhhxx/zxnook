@@ -26,7 +26,7 @@
 				</view>
 				<view class="pet-info">
 					<view class="icon">
-						<image src="../../static/address.png" mode="" class="image"></image>
+						<image src="../../static/image/icon/age.svg" mode="" class="image"></image>
 					</view>
 					<view class="info-name">年龄：</view>
 					<view class="info-desc">{{age}}</view>
