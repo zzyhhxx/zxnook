@@ -88,7 +88,7 @@
 	import XnSelect from '../../components/xn-form/select/select.vue';
 	import XnEditor from '../../components/xn-form/editor/editor.vue';
 	
-	import { addPet, getType, getBreed } from '../../network/Pet.js';
+	import { addPet, getType, getBreed, getPetById } from '../../network/Pet.js';
 	import { $toast, timeFormat } from '../../common/common.js';
 	import { CONFIG } from '../../common/config.js';
 	export default {
@@ -139,10 +139,12 @@
 			XnEditor
 		},
 		async onLoad(options) {
-			let {isEdit, data} = options;
+			let {isEdit, petId} = options;
 			await this.init();
-			if(isEdit === '1' && data) {
-				let petData = JSON.parse(data);
+			if(isEdit === '1' && petId) {
+				let result = await getPetById({petId});
+				if(result.code !== 1) {return;}
+				let petData = result.data;
 				if(Object.keys(petData).length) {
 					this.petId = petData.petId;
 					this.petAvatar = petData.petAvatar;

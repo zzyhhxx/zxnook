@@ -173,7 +173,7 @@
 			},
 			editPet(index) {
 				this.closePetList();
-				navigateTo(`/pages/addpet/addpet?isEdit=1&data=${JSON.stringify(this.petList[index])}`);
+				navigateTo(`/pages/addpet/addpet?isEdit=1&petId=${this.petList[index].petId}`);
 			},
 			getArticleList() {
 				let tabList = JSON.parse(JSON.stringify(this.tabList));
