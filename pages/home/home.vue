@@ -90,7 +90,7 @@
 	import { getPet, changePet } from '../../network/Pet.js';
 	import { getTabList } from '../../network/Home.js';
 	import { getArticleList } from '../../network/Article.js';
-	import { $toast } from '../../common/common';
+	import { $toast, navigateTo } from '../../common/common';
 	export default {
 		data() {
 			return {
@@ -169,27 +169,11 @@
 			},
 			addNewPet() {
 				this.closePetList();
-				let url = '/pages/addpet/addpet';
-				uni.navigateTo({
-					url,
-					fail: () => {
-						uni.redirectTo({
-							url
-						});
-					}
-				});
+				navigateTo('/pages/addpet/addpet');
 			},
 			editPet(index) {
 				this.closePetList();
-				const url = `/pages/addpet/addpet?isEdit=1&data=${JSON.stringify(this.petList[index])}`;
-				uni.navigateTo({
-					url,
-					fail: () => {
-						uni.redirectTo({
-							url
-						});
-					},
-				});
+				navigateTo(`/pages/addpet/addpet?isEdit=1&data=${JSON.stringify(this.petList[index])}`);
 			},
 			getArticleList() {
 				let tabList = JSON.parse(JSON.stringify(this.tabList));
@@ -205,15 +189,7 @@
 				})
 			},
 			onArticleClick(id) {
-				let url = `/pages/articledetail/articledetail?articleId=${id}`;
-				uni.navigateTo({
-					url,
-					fail: () => {
-						uni.redirectTo({
-							url
-						});
-					},
-				});
+				navigateTo(`/pages/articledetail/articledetail?articleId=${id}`);
 			}
 		}
 	}

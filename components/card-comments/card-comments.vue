@@ -1,6 +1,24 @@
 <template>
 	<view class="card">
+		<view class="user-info">
+			<view class="user-head">
+				<image src="../../static/image/head2.png" mode="" class="head-image"></image>
+			</view>
+			<view class="user-text">
+				<view class="user-name">佩奇的主人</view>
+				<view class="pet-name">佩奇</view>
+			</view>
+		</view>
+		<view class="like">
+			<image src="../../static/like.png" mode="" class="like-image"></image>
+		</view>
+		<view class="content">
+			11111111111111111111111111
+		</view>
 		<view class="img">
+			<image src="../../static/dog1.png" mode="" class="main-img"></image>
+			<image src="../../static/dog1.png" mode="" class="main-img"></image>
+			<image src="../../static/dog1.png" mode="" class="main-img"></image>
 			<image src="../../static/dog1.png" mode="" class="main-img"></image>
 		</view>
 		<view class="bottom">
@@ -9,6 +27,12 @@
 					<image src="../../static/like.png" mode="" class="image"></image>
 				</view>
 				<view class="item-num">2.5k</view>
+			</view>
+			<view class="bottom-item right">
+				<view class="item-image">
+					<image src="../../static/commont.png" mode="" class="image"></image>
+				</view>
+				<view class="item-num">1.6k</view>
 			</view>
 		</view>
 	</view>
@@ -28,7 +52,7 @@
 <style scoped>
 	.card {
 		width: 604rpx;
-		height: 496rpx;
+		height: 582rpx;
 		background-color: #F8F8FB;
 		border-radius: 44rpx;
 		position: relative;
@@ -39,6 +63,8 @@
 	.user-info {
 		display: flex;
 		margin-top: 48rpx;
+	}
+	.content {
 	}
 	.user-head {
 		width: 62rpx;
@@ -81,27 +107,30 @@
 	}
 	.img {
 		width: 100%;
-		height: 356rpx;
-		margin-top: 30rpx;
+		height: 316rpx;
+		margin-top: 32rpx;
 		display: flex;
 		flex-wrap: wrap;
-		justify-content: center;
-		align-content: center;
+		justify-content: space-between;
+		align-content: space-between;
 	}
 	.main-img {
-        height: 100%;
-		width: calc(100% - 60rpx);
+		height: calc(50% - 5px);
+		width: calc(50% - 5px);
 	}
 	.bottom {
+		margin-top: 32rpx;
 		display: flex;
 		position: absolute;
-		left: 30rpx;
+		right: 30rpx;
 		bottom: 30rpx;
 	}
 	.bottom .left {
+		margin-left: 34rpx;
 		background: #FFF4F4;
 	}
 	.bottom .right {
+		margin-left: 38rpx;
 		background: #D9E5FB;
 	}
 	.bottom-item {

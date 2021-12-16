@@ -115,6 +115,35 @@ export function redirectTo(url) {
 		url
 	});
 }
+/**
+ * 函数防抖
+ * 默认immediate=true，多次触发事件，只会执行第一次触发事件，并且立即执行
+ * 当immediate=false，多次触发事件，只会执行最后一次触发事件，并且延迟(delay)执行 
+ * @param {*} handler 
+ * @param {*} delay 
+ * @param {*} immediate 
+ * @returns 
+ */
+export function debounce(handler, delay, immediate) {
+    let timer = null;
+    let wait = delay || 350;
+    let doNow = arguments.length < 3 ? true : immediate;
+    return function(){
+        let ctx = this;
+        let args = arguments;
+        if(timer) clearTimeout(timer);
+        if(doNow){
+            if(!timer) handler.apply(ctx, args);
+            timer = setTimeout(function(){
+                timer = null;
+            }, wait);
+        }else{
+            timer = setTimeout(function(){
+                handler.apply(ctx, args);
+            }, wait);
+        }
+    }
+}
 
 function _uploadFile(files, result = []) {
 	if(!files.length) {

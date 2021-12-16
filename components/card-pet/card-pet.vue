@@ -32,7 +32,11 @@
 					<view class="info-desc">{{age}}</view>
 				</view>
 			</view>
-			<view class="change-pet" @click="changePet()">
+			<view
+				v-if="showChangePet && hasPet" 
+				class="change-pet" 
+				@click="changePet()"
+			>
 				切换宠物
 			</view>
 		</view>
@@ -58,6 +62,10 @@
 				default() {
 					return {};
 				}
+			},
+			showChangePet: {
+				type: Boolean,
+				default: true
 			}
 		},
 		data() {

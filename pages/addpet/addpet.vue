@@ -61,6 +61,14 @@
 			:currentIndex="sterilisationIndex"
 			@btnClick="onChange"
 		></xn-ratio>
+		<xn-editor
+			class="form-item"
+			label="描述"
+			propName="petDesc"
+			:defaultValue="petDesc"
+			@change="onChange" 
+		>
+		</xn-editor>
 		<xn-button
 			text="保存"
 			class="btn"
@@ -78,6 +86,7 @@
 	import XnRatio from '../../components/xn-form/ratio/ratio.vue';
 	import XnDate from '../../components/xn-form/date/date.vue';
 	import XnSelect from '../../components/xn-form/select/select.vue';
+	import XnEditor from '../../components/xn-form/editor/editor.vue';
 	
 	import { addPet, getType, getBreed } from '../../network/Pet.js';
 	import { $toast, timeFormat } from '../../common/common.js';
@@ -117,7 +126,8 @@
 				petBreed: '',
 				birthday: '',
 				homeDay: '',
-				isSterilisation: ''
+				isSterilisation: '',
+				petDesc: ''
 			}
 		},
 		components: {
@@ -125,7 +135,8 @@
 			XnInput,
 			XnRatio,
 			XnDate,
-			XnSelect
+			XnSelect,
+			XnEditor
 		},
 		async onLoad(options) {
 			let {isEdit, data} = options;
@@ -136,6 +147,7 @@
 					this.petId = petData.petId;
 					this.petAvatar = petData.petAvatar;
 					this.petName = petData.petName;
+					this.petDesc = petData.petDesc;
 					this.birthday = timeFormat('yyyy-MM-dd', new Date(petData.petBirthday * 1000));
 					this.homeDay = timeFormat('yyyy-MM-dd', new Date(petData.petHomday * 1000));
 					this.setValue(this.genderRatio, petData, 'petGender', 'radioIndex');
@@ -220,7 +232,8 @@
 					petBreed: this.petBreed,
 					petBirthday: this.birthday,
 					petHomday: this.homeDay,
-					isSterilisation: this.isSterilisation
+					isSterilisation: this.isSterilisation,
+					petDesc: this.petDesc
 				}
 				if(this.petId) {
 					data.petId = this.petId;
