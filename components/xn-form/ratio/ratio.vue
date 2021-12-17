@@ -1,7 +1,7 @@
 <template>
 	<view class="ratio">
 		<view class="label">{{label}}</view>
-		<view class="ratio-item">
+		<view class="ratio-item" :class="{wrap: list.length > 2}">
 			<template v-if="list.length">
 				<view
 					class="item"
@@ -62,7 +62,7 @@
 		width: 604rpx;
 		display: flex;
 		justify-content: space-between;
-		flex-wrap: nowrap;
+		flex-wrap: wrap;
 		line-height: 44rpx;
 	}
 	.item {
@@ -81,5 +81,10 @@
 		display: flex;
 		flex-wrap: nowrap;
 		justify-content: space-around;
+	}
+	.wrap {
+		width: 100%;
+		justify-content: flex-end;
+		margin-top: 10rpx;
 	}
 </style>

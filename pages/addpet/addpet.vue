@@ -61,6 +61,14 @@
 			:currentIndex="sterilisationIndex"
 			@btnClick="onChange"
 		></xn-ratio>
+		<xn-ratio 
+			class="form-item" 
+			label="是否领养"
+			propName="tradeStatus"
+			:list="tradeStatusList"
+			:currentIndex="tradeStatusIndex"
+			@btnClick="onChange"
+		></xn-ratio>
 		<xn-editor
 			class="form-item"
 			label="描述"
@@ -118,7 +126,14 @@
 					{value: 1, name: '未绝育'}, 
 					{value: 2, name: '已绝育'}
 					],
-				
+
+				tradeStatusIndex: 0,
+				tradeStatusList: [
+					{value: 10, name: '不领养'}, 
+					{value: 20, name: '待领养'},
+					{value: 30, name: '已被领养'}
+					],
+
 				petAvatar: '',
 				petName: '',
 				petGender: '',
@@ -127,7 +142,8 @@
 				birthday: '',
 				homeDay: '',
 				isSterilisation: '',
-				petDesc: ''
+				petDesc: '',
+				tradeStatus: ''
 			}
 		},
 		components: {
@@ -157,6 +173,7 @@
 					this.setValue(this.typeList, petData, 'petType', 'typeIndex');
 					this.setValue(this.allBreedList.cat, petData, 'petBreed', 'breedIndex');
 					this.setValue(this.allBreedList.dog, petData, 'petBreed', 'breedIndex');
+					this.setValue(this.tradeStatusList, petData, 'tradeStatus', 'tradeStatusIndex');
 				}
 			}
 			
@@ -218,6 +235,9 @@
 				}else if(name === 'petBreed') {
 					this.breedIndex = value;
 					this.petBreed = this.breedList[value].value;
+				}else if(name === 'tradeStatus') {
+					this.tradeStatusIndex = value;
+					this.tradeStatus = this.tradeStatusList[value].value;
 				}else {
 					this[name] = value;
 				}
@@ -235,7 +255,8 @@
 					petBirthday: this.birthday,
 					petHomday: this.homeDay,
 					isSterilisation: this.isSterilisation,
-					petDesc: this.petDesc
+					petDesc: this.petDesc,
+					tradeStatus: this.tradeStatus
 				}
 				if(this.petId) {
 					data.petId = this.petId;

@@ -5,12 +5,13 @@ export async function uploadFile() {
 	return new Promise(resolve => {
 		uni.chooseImage({
 		    count: 9, //默认9
-		    sizeType: ['compressed'], //可以指定是原图还是压缩图，默认二者都有
+		    sizeType: ['compressed', 'original'], //可以指定是原图还是压缩图，默认二者都有
 		    sourceType: ['album'], //从相册选择
 		    success: async function(res) {
 				let tempFilePaths = res.tempFilePaths || [];
 				if(Array.isArray(tempFilePaths) && tempFilePaths.length) {
-					_uploadFile(tempFilePaths).then(res => {
+					_uploadFile(tempFilePaths)
+					.then(res => {
 						resolve(res)
 					});
 				}
@@ -163,7 +164,7 @@ function _uploadFile(files, result = []) {
 					let {statusCode, errMsg, data} = res || {};
 					if(statusCode === 200 && errMsg === 'uploadFile:ok') {
 						let _data = JSON.parse(data);
-						let {code, msg} = _data;
+						let { code } = _data;
 						if(code === 1) {
 							result.push(_data.data.file_path);
 						}

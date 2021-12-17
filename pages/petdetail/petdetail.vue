@@ -35,7 +35,7 @@
 			</view>
 			<view 
 				v-if="tradeStatus"
-				class="info-item"
+				class="info-item long-item"
 			>
 				<view class="info-item-icon">
 					<image src="../../static/image/icon/trade.svg" class="item-icon icon-trade"></image>
@@ -92,7 +92,7 @@
 				return this.petInfo.tradeStatus === 20 
 					? '待领养' 
 					: this.petInfo.tradeStatus === 30
-					? '已领养'
+					? '已被领养'
 					: '';
 			}	
 		},
@@ -168,5 +168,8 @@
 }
 .info-item-key {
 	margin-left: 22rpx;
+}
+.long-item {
+	width: 100%;
 }
 </style>
